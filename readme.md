@@ -5,7 +5,6 @@ This is the COP3503 project for our group. The goal is to detect and count coins
 
 
 # Members
-	* Anna Morgan
 	* Brett Nelson
 	* Ryan Nordman
 	* Mani Angerhofer
