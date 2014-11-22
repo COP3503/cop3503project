@@ -11,7 +11,7 @@ project (CoinCounter)
 #   "${PROJECT_BINARY_DIR}/main.h"
 # )
 
-#include_directories("${PROJECT_BINARY_DIR}")
+add_subdirectory (src)
 
 find_package(OpenCV REQUIRED)
 add_executable(ImgDisplay imgDisplay.cpp)
