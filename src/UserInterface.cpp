@@ -27,9 +27,17 @@ int getLength() {
     //coins that were counted
 }
 
+string getPicture() {
+    string myString;
+    getline(cin, myString);
+    return myString;
+}
+
 void displayInterface() {
     cout << "Welcome to the coin counter program!" << endl << endl; 
     cout << "Please upload picture to be analyzed: ";
+    cout << "\n";
+    getPicture();	
     cout << "\n\n";
     int length = getLength();
     cout << "The value of the coins on display is $" << getValue(length) << "\n";
