@@ -1,32 +1,17 @@
 #include <stdio.h>
 #include <string>
 #include <opencv2/opencv.hpp>
+#include <vector>
 
 using namespace std;
 
 class Coin{
-public:
+private:
   int diameter;
-  string value;
+  string denomination;
+  int dollarValue;
+  map<string,double> diameterMap;
+  map<string,double,double> diameterMap;
+}
 
-  //Constructor
-  Coin(Mat mask){
-    int size = mask.size;
-    int height = size.height;
-    int width = size.width;
-    bool coinFlag = false;
-    int counter = 0;
-    for(int i = 0; int < height; i++){
-      for(int j = 0; int < width; j++){
-	if(mask(i,j) == 255){
-	  coinFlag = true;
-	  cointer++;
-	}
-      }
-      coinFlag = false;
-    }
-    diameter = counter;
-  }
 
-  value = 'no coin';
-};
