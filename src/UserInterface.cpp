@@ -30,17 +30,27 @@ int getLength() {
 string getPicture() {
     string myString;
     getline(cin, myString);
-    return myString;
+    unsigned int len = myString.length();
+    string sub = myString.substr(len-4, len);
+    if (sub==".bmp" || sub==".dib" || sub== "jpeg" || sub== ".jpg" || sub == ".jpe" || sub== ".jp2" || sub== ".png" || sub== ".pbm" || sub== ".pgm" || sub == ".ppm" || sub.substr(1,4)==".sr" || sub==".ras" || sub== "tiff" || sub== ".tif") {	
+    	return myString;
+    }
+    return "void";		
 }
 
-void displayInterface() {
+int displayInterface() {
     cout << "Welcome to the coin counter program!" << endl << endl; 
     cout << "Please upload picture to be analyzed: ";
     cout << "\n";
-    getPicture();	
+    string fileName=getPicture();
+    if (fileName=="void") {
+	cout << "Invalid picture inputted\n";
+	return 0;
+    }	
     cout << "\n\n";
     int length = getLength();
     cout << "The value of the coins on display is $" << getValue(length) << "\n";
+    return 0;
 }
 
 int main()
