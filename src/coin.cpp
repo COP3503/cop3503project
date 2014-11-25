@@ -32,17 +32,23 @@ Coin(Mat mask){
   diameter = counter;
   denomination = 'unknown';
   dollarValue = 0;
+  diameterMap = 
 }
 
 void setDenomination(Coin a, string name){
-  a.value = name;
+  //    if (name=="Dollar-coin") a.dollarValue += 1;
+  //    if (name=="Half-dollar") a.dollarValue += .5;
+    if (name=="quater") a.dollarValue += .25;
+    if (name=="dime") a.dollarValue += .1;
+    if (name=="nickle") a.dollarValue +=.05;
+    if (name=="penny") a.dollarValue +=.01;
+    denomination = name;
+  }
 }
 
 string getDenomination(Coin a){
-  return a.value;
+  return a.denomination;
 }
-
-
 
 //diameter compare
 void compareCoins(Coin[] array){
@@ -70,9 +76,7 @@ void compareCoins(Coin[] array){
       }
     }
   }
-
   void arrayCompare(Coin[] array){
-
 };
 
 
