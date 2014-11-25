@@ -2,9 +2,16 @@
 #include <string>
 #include <opencv2/opencv.hpp>
 #include <vector>
+#include <map>
 
 using namespace std;
 
+
+struct CoinStruct {
+  double Ratio;
+  string CoinA;
+  string CoinB;
+} Ratios [16];
 
 //Constructor
 Coin(Mat mask){
@@ -23,23 +30,56 @@ Coin(Mat mask){
     coinFlag = false;
   }
   diameter = counter;
-  value = 'no coin';
+  denomination = 'unknown';
+  dollarValue = 0;
 }
 
+void setDenomination(Coin a, string name){
+  a.value = name;
+}
+
+string getDenomination(Coin a){
+  return a.value;
+}
+
+
+
 //diameter compare
-void compareCoins(Coin A, Coin B){
+void compareCoins(Coin[] array){
 
-  struct CoinRatios {
-    double Ratio;
-    string CoinA;
-    string CoinB;
-  } Ratios [16];
+  int size = array.size;
+  //Creat struct with all coin values
+  double ratio[4] = {.75, .835, .705, .955};
 
-  double ratio = A.diameter/B.diameter;
-  for(int i = 0; i<16; i++){
-    if(ratio = Ratios[i].ratio){
-      A.value = Ratios[i].CoinA;
-      B.value = Ratios[i].CoinB;
+  string name[4] = {'penny','nickel','dime','quarter'};
+
+  for(int i = 0; i<4; i++){
+    for(int j = 1; j<5; j++){
+      Ratios[i*j].Ratio = ratio[i]/ratio[j-1];
+      Ratios[i*j].CoinA = name[i];
+      Ratios[i*j].CoinB = name[j-1];
     }
   }
+
+  void coinCompare(Coin A, Coin B){
+    double ratio = A.diameter/B.diameter;
+    for(int i = 0; i<16; i++){
+      if(ratio = Ratios[i].ratio && ratio != 1){
+	A.value = Ratios[i].CoinA;
+	B.value = Ratios[i].CoinB;
+      }
+    }
+  }
+
+  void arrayCompare(Coin[] array){
+
 };
+
+
+
+
+
+
+
+
+
