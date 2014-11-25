@@ -7,16 +7,16 @@ using namespace cv;
 class Data {
 public:
     void Data(string);
-    void getImage();
-    double coinSumUp()
+    //void getImage();
+    double sumCoins();
     Mat image;
     vector<Mat*> binary;
-    coin[] piggyBank;
+    vector<coin> piggyBank;
     
 };
 
 void Data::Data(string);
 
-void Data::getImage();
+//void Data::getImage();
 
-coin[] fillPiggyBank(vector<Mat*>);
+vector<coin> Data::fillPiggyBank(vector<Mat*>);
