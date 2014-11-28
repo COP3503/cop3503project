@@ -6,7 +6,7 @@
 #include <map>
 #include <cmath>
 
-using namespace std;
+using namespace cv;
 
 
 struct CoinStruct {
@@ -17,42 +17,52 @@ struct CoinStruct {
   string CoinB;
 } Ideal [16];
 
-//Constructor
-Coin(Mat mask){
-  int size = mask.size;
-  int height = size.height;
-  int width = size.width;
-  bool coinFlag = false;
-  int counter = 0;
-  for(int i = 0; int < height; i++){
-    for(int j = 0; int < width; j++){
-      if(mask(i,j) == 255){
-	coinFlag = true;
-	cointer++;
-      }
-    }
-    coinFlag = false;
-  }
-  diameter = counter;
-  denomination = 'unknown';
-  dollarValue = 0;
-  diameterMap = 
-}
+class Coin{
+public:
+  int diameter;
+  string denomination;
+  int dollarValue;
 
-void setDenomination(Coin a, string name){
-  //    if (name=="Dollar-coin") a.dollarValue += 1;
-  //    if (name=="Half-dollar") a.dollarValue += .5;
+  //order starting from 1: penny, nickel, dime, quarter
+  vector<double> allProbablilites[4];
+  vector<double> finalProbablities;
+
+  //map<string,double> diameterMap;
+  //Constructor
+  Coin(Mat mask){
+    int height = mask.cols;
+    int width = mask.rows;
+    bool coinFlag = false;
+    int counter = 0;
+    for(int i = 0; i < height; i++){
+      for(int j = 0; i < width; j++){
+	if(mask(i,j) == 255){
+	  coinFlag = true;
+	  cointer++;
+	}
+      }
+      coinFlag = false;
+    }
+    diameter = counter;
+    denomination = "unknown";
+    dollarValue = 0;
+    //diameterMap = 
+  }
+
+  void setDenomination(Coin a, string name){
+    //    if (name=="Dollar-coin") a.dollarValue += 1;
+    //    if (name=="Half-dollar") a.dollarValue += .5;
     if (name=="quater") a.dollarValue += .25;
     if (name=="dime") a.dollarValue += .1;
     if (name=="nickle") a.dollarValue +=.05;
     if (name=="penny") a.dollarValue +=.01;
     denomination = name;
   }
-}
 
-string getDenomination(Coin a){
-  return a.denomination;
-}
+  string getDenomination(Coin a){
+    return a.denomination;
+  }
+};
 
 //diameter compare
 void compareCoins(Coin[] array){
@@ -114,19 +124,35 @@ void compareCoins(Coin[] array){
     return probs;
   }
 
-  int size = Coin[].size;
+  int size = array.size;
   for(int i = 0; i<size; i++){
     for(int j = 0; j<size; j++){
       if(i != j){
-	compare(Coin[i], Coin[j]);
+	compare(array[i], array[j]);
       }
     }
   }
 
   for(int i = 0; i<size; i++){
-best
-
+    bestProb(array[i]);
+  }
 };
+
+int main(){
+
+  Coin coinArray[3];
+
+  img imread("/home/mani/School/UF/Fall 2014/COP3503/Final Project/cop3503project/test/coins_1_mask_1.png");
+  Coin coinArray[1] = new Coin(img);
+  img imread("/home/mani/School/UF/Fall 2014/COP3503/Final Project/cop3503project/test/coins_1_mask_2.png");
+  Coin coinArray[2] = new Coin(img)
+  img imread("/home/mani/School/UF/Fall 2014/COP3503/Final Project/cop3503project/test/coins_1_mask_3.png");
+  Coin coinArray[3] = new Coin(img);
+
+  compareCoins(coinArray);
+
+  return 0;
+}
 
 
 
