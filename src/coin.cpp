@@ -1,17 +1,21 @@
+#include <iostream>
 #include <stdio.h>
 #include <string>
 #include <opencv2/opencv.hpp>
 #include <vector>
 #include <map>
+#include <cmath>
 
 using namespace std;
 
 
 struct CoinStruct {
   double Ratio;
+  double Difference;
+  double ScaledDifference;
   string CoinA;
   string CoinB;
-} Ratios [16];
+} Ideal [16];
 
 //Constructor
 Coin(Mat mask){
@@ -53,30 +57,75 @@ string getDenomination(Coin a){
 //diameter compare
 void compareCoins(Coin[] array){
 
-  int size = array.size;
   //Creat struct with all coin values
-  double ratio[4] = {.75, .835, .705, .955};
+  double value[4] = {.75, .835, .705, .955};
+  string name[4] = {"penny","nickel","dime","quarter"};
 
-  string name[4] = {'penny','nickel','dime','quarter'};
-
-  for(int i = 0; i<4; i++){
-    for(int j = 1; j<5; j++){
-      Ratios[i*j].Ratio = ratio[i]/ratio[j-1];
-      Ratios[i*j].CoinA = name[i];
-      Ratios[i*j].CoinB = name[j-1];
-    }
+  for(int i = 0; i<16; i++){
+    Ideal[i].Ratio = value[i/4]/value[i%4];
+    Ideal[i].CoinA = name[i/4];
+    Ideal[i].CoinB = name[i%4];
+    Ideal[i].Difference = abs(value[i/4]-value[i%4]);
+    Ideal[i].ScaledDifference = Ideal[i].Difference/((value[i/4]+value[i%4])/2);
   }
 
-  void coinCompare(Coin A, Coin B){
-    double ratio = A.diameter/B.diameter;
+  //Compare 2 coins and find relative confidence
+  void compare(Coin A, Coin B){
+    dA = A.diameter;
+    dB = B.diameter;
+    double ratio = dA/dB;
+    double scaledDifference = abs(dA-dB)/((dA+dB)/2);
+    double sProb, rProb, aProb;
+
     for(int i = 0; i<16; i++){
-      if(ratio = Ratios[i].ratio && ratio != 1){
-	A.value = Ratios[i].CoinA;
-	B.value = Ratios[i].CoinB;
+      if(Ideal[i].ratio != 1){
+	rProb = 1 - abs(ratio - Ideal[i].Ratio);
+	sProb = 1 - abs(scaledDifference - Ideal[i].ScaledDifference);
+	aProb = (rProb + sProb)/2;
+	updateProbablities(A,Ideal[i].CoinA,aProb);
+	updateProbablities(B,Ideal[i].CoinB,aProb);
       }
     }
   }
-  void arrayCompare(Coin[] array){
+
+  //Adds a probability of a coin type to its appropriate coin vector
+  void updateProbablities(Coin A, string denomination, double Prob){
+    if (denomination=="penny") A.allProbabilities[1].push_back(Prob);
+    if (denomination=="nickel") A.allProbabilities[2].push_back(Prob);
+    if (denomination=="dime") A.allProbabilities[3].push_back(Prob);
+    if (denomination=="quarter") A.allProbabilities[4].push_back(Prob);
+  }
+
+  //Finds the best probability of each coin type for a coin and adds them to the finalProbabilites vector
+   void bestProb(Coin coin){
+    double max;
+    for(int i = 0; i<4; i++){
+      int size = coin.probabilites[i].size;
+      for(int j = 0; j<size-1; j++){
+	if(coin.allProbabilities[i].at(j+1) > coin.allProbabilities[i].at(i)){
+	  max = coin.allProbabilities[i].at(j+1);
+	}
+	else{
+	  max = coin.allProbabilities[i].at(i);
+	}
+      }
+      coin.finalProbablities.push_back(max);
+    }
+    return probs;
+  }
+
+  int size = Coin[].size;
+  for(int i = 0; i<size; i++){
+    for(int j = 0; j<size; j++){
+      if(i != j){
+	compare(Coin[i], Coin[j]);
+      }
+    }
+  }
+
+  for(int i = 0; i<size; i++){
+best
+
 };
 
 
