@@ -23,6 +23,7 @@ public:
   int diameter;
   string denomination;
   int dollarValue;
+  Mat Mask;
 
   //order starting from 1: penny, nickel, dime, quarter
   vector<double> allProbabilities[4];
@@ -32,14 +33,15 @@ public:
 
   //Constructor
   Coin(Mat mask){
-    int width = mask.cols;
-    int height = mask.rows;
+    Mask = mask;
+    int width = Mask.cols;
+    int height = Mask.rows;
     bool coinFlag = false;
     int counter = 0;
     for(int i = 0; i < height; i++){
       for(int j = 0; j < width; j++){
-	//	cout<<mask.at<int>(i,j)<<endl;
-	if(mask.at<int>(i,j) == -1){
+	//	cout<<Mask.at<int>(i,j)<<endl;
+	if(Mask.at<int>(i,j) == -1){
 	  coinFlag = true;
 	  counter++;
 	  break;
@@ -55,6 +57,7 @@ public:
     //diameterMap = 
   }
 
+  //Sets the denomination for a coin
   void setDenomination(string name){
     //    if (name=="Dollar-coin") a.dollarValue += 1;
     //    if (name=="Half-dollar") a.dollarValue += .5;
@@ -75,6 +78,10 @@ public:
 
   map<string,double> getDiameterMap(){
     return diameterMap;
+  }
+
+  Mat getMask(){
+    return Mask;
   }
 
   //Adds a probability of a coin type to its appropriate coin vector
