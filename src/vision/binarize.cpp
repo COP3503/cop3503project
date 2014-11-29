@@ -6,7 +6,6 @@ using namespace cv;
 
 vector<Mat*> get_hough_masks(Mat input_image ) {
   /* Given an RGB input image, returns a vector of images 
-    
     Example:
       vector<Mat*> masks = get_hough_masks(input_image);
       std::cout << masks.size() << std::endl;
@@ -14,8 +13,6 @@ vector<Mat*> get_hough_masks(Mat input_image ) {
         imshow("One element of the mask vector", *masks[j]);
         waitKey(0);
       }
-
-    
   */
   vector<Mat*> masks;
 
@@ -33,7 +30,7 @@ vector<Mat*> get_hough_masks(Mat input_image ) {
 
     // Get center of the coin
     Point center(cvRound(circles[i][0]), cvRound(circles[i][1]));
-    int radius = cvRound(circles[i][2]);
+    int radius = cvRound(circles[i][2]);  // Mani: This is the radius of the coin
     // Circle center
     circle(input_image, center, 3, Scalar(0, 255, 0), -1, 8, 0);
     // Circle outline
@@ -49,7 +46,29 @@ vector<Mat*> get_hough_masks(Mat input_image ) {
 void get_hsv_masks(Mat input_image) {
   Mat input_image_HSV;
   cvtColor(input_image, input_image_HSV, CV_BGR2HSV);
-  imshow("HSV", input_image_HSV);
+  // adaptiveThreshold(InputArray src, OutputArray dst, double maxValue, int adaptiveMethod, int thresholdType, int blockSize, double C)
+
+  Mat channel[3];
+  split(input_image_HSV, channel);
+  
+  Mat thresh_H, thresh_S, thresh_V;
+  // ADAPTIVE_THRESH_MEAN_C
+  adaptiveThreshold(channel[0], thresh_H,  10.0, ADAPTIVE_THRESH_GAUSSIAN_C, THRESH_BINARY, 5, 1);
+  adaptiveThreshold(channel[1], thresh_S,  10.0, ADAPTIVE_THRESH_GAUSSIAN_C, THRESH_BINARY, 5, 1);
+  adaptiveThreshold(channel[2], thresh_V,  10.0, ADAPTIVE_THRESH_GAUSSIAN_C, THRESH_BINARY, 5, 1);
+
+
+  imshow("thresh_H", thresh_H );
+  imshow("thresh_S", thresh_S );
+  imshow("thresh_V", thresh_V );
+
+  imshow("H", channel[0]);
+  imshow("S", channel[1]);
+  imshow("V", channel[2]);
+
+  // Copper:
+  // 5°, 39%, 68
+
   waitKey(0);
 }
 
@@ -60,8 +79,18 @@ int main(int argc, char* argv[]) {
   Mat input_image;
   input_image = imread("/home/jacob/repos/cop3503/cop3503project/test/coins_1.jpg", CV_LOAD_IMAGE_COLOR);
   // Again, should be using smart ptrs
-  get_hsv_masks(input_image);
-  imshow("Test Image", input_image);  
+  // get_hsv_masks(input_image);
+  // imshow("Test Image", input_image);  
+
+
+  vector<Mat*> masks = get_hough_masks(input_image);
+  std::cout << masks.size() << std::endl;
+  for (size_t j = 0; j < masks.size(); j++) {
+    imshow("One element of the mask vector", *masks[j]);
+    imwrite("my image file.png", *masks[j]);
+    waitKey(0);
+  }
+
 
   waitKey(0);
 
