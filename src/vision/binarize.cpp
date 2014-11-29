@@ -1,10 +1,12 @@
 #include <stdio.h>
 #include <opencv2/opencv.hpp>
 #include <iostream>
+#include <vector>
+#include "binarize.h"
 
 using namespace cv;
 
-vector<Mat*> get_hough_masks(Mat input_image ) {
+std::vector<Mat*> get_hough_masks(Mat input_image ) {
   /* Given an RGB input image, returns a vector of images 
     Example:
       vector<Mat*> masks = get_hough_masks(input_image);
@@ -14,12 +16,12 @@ vector<Mat*> get_hough_masks(Mat input_image ) {
         waitKey(0);
       }
   */
-  vector<Mat*> masks;
+  std::vector<Mat*> masks;
 
   // Greyscaling of input image
   Mat input_gray;
   cvtColor(input_image, input_gray, CV_BGR2GRAY);
-  vector<Vec3f> circles;
+  std::vector<Vec3f> circles;
   GaussianBlur(input_gray, input_gray, Size(9, 9), 2, 2);
   HoughCircles(input_gray, circles, CV_HOUGH_GRADIENT, 1, input_gray.rows/8, 200, 100, 0, 0);
 
@@ -73,26 +75,3 @@ void get_hsv_masks(Mat input_image) {
 }
 
 
-// Use this main as an example
-
-int main(int argc, char* argv[]) {
-  Mat input_image;
-  input_image = imread("/home/jacob/repos/cop3503/cop3503project/test/coins_1.jpg", CV_LOAD_IMAGE_COLOR);
-  // Again, should be using smart ptrs
-  // get_hsv_masks(input_image);
-  // imshow("Test Image", input_image);  
-
-
-  vector<Mat*> masks = get_hough_masks(input_image);
-  std::cout << masks.size() << std::endl;
-  for (size_t j = 0; j < masks.size(); j++) {
-    imshow("One element of the mask vector", *masks[j]);
-    imwrite("my image file.png", *masks[j]);
-    waitKey(0);
-  }
-
-
-  waitKey(0);
-
-  return 0;
-}

@@ -3,15 +3,19 @@ COP3503 Project
 
 This is the COP3503 project for our group. The goal is to detect and count coins in an image.
 
+[Find it here](https://github.com/COP3503/cop3503project)
+
 # Usage
 
-To build the project, make a directory in the root folder called "build", then
+To build the project, make a directory in the repository's root folder called "build" (This would look like blabla/jacob/cop3503project/build), then
 
     cd ./build
     cmake ..
     make 
 
-Then run the file that's been created
+Then run whichever file you like. Please do not commit your build folder.
+
+To run the vision tests, cd into build/src/vision and type ./vision_test
 
 # Using Cmake
 
