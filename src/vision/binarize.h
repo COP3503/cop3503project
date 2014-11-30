@@ -16,12 +16,36 @@ std::vector<cv::Mat*> get_hough_masks(cv::Mat);
     size(M \ O) = diff [where \ is the set difference operator]
     if diff > 0.1 * area(O): Not a coin or an oval at all!
 
+    Notes:
+
+        Segmentation:
+            Watershed for segmentation is a reasonable approach, but will not work on complex backgrounds
+            Likewise, houghcircles will fail on complex backgrounds
+
+        
+        Labelling:
+
+            Real diameter is viewing angle insensitive
+            HSV color [H] is generally lighting insensitive and always viewing angle insensitive
+            -- Apply Ohtsu threshhold
+            -- Full histogram matching will work better, can we do it?
+
+            -- Note the 2D Fast Otsu method
+
+            Perspective/affine transform of the simplest inscribing quadrilateral will give a top-down view of the coin
+            -- Then, can use Haar cascade
+
+
+
     ################
 
     Harr cascade classifier
     Machine learning
 
     Someone needs to find training images
+
+
+
 
 
 */
