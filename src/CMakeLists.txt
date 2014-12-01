@@ -1,9 +1,10 @@
 cmake_minimum_required(VERSION 2.8)
-project( coin_count )
 find_package( OpenCV REQUIRED )
-add_executable( binarize binarize.cpp )
-add_executable( data data.cpp )
-add_executable( coin coin.h )
-target_link_libraries( binarize ${OpenCV_LIBS} )
-target_link_libraries( data $(OpenCV_LIBS} )
-target_link_libraries( coin $(OpenCV_LIBS} )
+
+add_subdirectory (vision)
+
+
+#add_executable( data data.cpp )
+#add_executable( coin coin.h )
+#target_link_libraries( data ${OpenCV_LIBS} )
+#target_link_libraries( coin ${OpenCV_LIBS} )

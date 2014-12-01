@@ -1,0 +1,1 @@
+configure_file(coins_1.jpg ${CMAKE_BINARY_DIR}/test/coins_1.jpg COPYONLY)
