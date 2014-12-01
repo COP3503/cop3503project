@@ -143,7 +143,7 @@ void Coin::compare(Coin B){
 };
 
 //Diameter compare
-void compareCoins(Coin array[], int size){
+/*void compareCoins(Coin array[], int size){
   for(int i = 0; i<size; i++){
     for(int j = 0; j<size; j++){
       if(i != j){
@@ -157,10 +157,10 @@ void compareCoins(Coin array[], int size){
     array[i].bestProb();
     array[i].printProbs();
   }
-}
+  }*/
 
 //Test Case
-int main(){
+/*int main(){
 
   Mat img1 = imread("/home/mani/School/COP3503/Homework/Final/cop3503project/test/coins_1_mask_1.png");
   Mat img2 = imread("/home/mani/School/COP3503/Homework/Final/cop3503project/test/coins_1_mask_2.png");
@@ -179,4 +179,4 @@ int main(){
     cout<<endl;
   }
   return 0;
-}
+  }*/
