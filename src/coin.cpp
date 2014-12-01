@@ -71,7 +71,11 @@ public:
   string getDenomination(){
     return denomination;
   }
-
+  
+  double getDollarValue(){
+      return dollarValue;
+  }
+  
   double getDiameter(){
     return diameter;
   }
