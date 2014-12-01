@@ -61,10 +61,10 @@ public:
   void setDenomination(string name){
     //    if (name=="Dollar-coin") a.dollarValue += 1;
     //    if (name=="Half-dollar") a.dollarValue += .5;
-    if (name=="quarter") dollarValue += .25;
-    if (name=="dime") dollarValue += .1;
-    if (name=="nickle") dollarValue +=.05;
-    if (name=="penny") dollarValue +=.01;
+    if (name=="quarter") dollarValue = .25;
+    if (name=="dime") dollarValue = .1;
+    if (name=="nickle") dollarValue =.05;
+    if (name=="penny") dollarValue =.01;
     denomination = name;
   }
 
