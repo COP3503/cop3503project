@@ -10,14 +10,6 @@ using namespace cv;
 
 using namespace std;
 
-struct CoinStruct {
-  double Ratio;
-  double Difference;
-  double ScaledDifference;
-  string CoinA;
-  string CoinB;
-} Ideal [16];
-
 class Coin{
 public:
   /********Variables and objects********/
@@ -57,6 +49,9 @@ public:
 
   //Compare 2 coins and find relative confidence
   void compare(Coin B);
+
+  //troubleshooting function
+  void printProbs();
 };
 
 
