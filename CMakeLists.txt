@@ -15,8 +15,8 @@ option (MAKE_TESTS
 #   "${PROJECT_BINARY_DIR}/main.h"
 # )
 
-add_subdirectory (src)
-add_subdirectory (test)
+#add_subdirectory (src)
+#add_subdirectory (test)
 
 find_package(OpenCV REQUIRED)
 add_executable(ImgDisplay imgDisplay.cpp)
