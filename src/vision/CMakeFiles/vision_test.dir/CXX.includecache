@@ -1,0 +1,42 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/mani/School/COP3503/Homework/Final/cop3503project/src/vision/coin.cpp
+iostream
+-
+stdio.h
+-
+string
+-
+opencv2/opencv.hpp
+-
+vector
+-
+map
+-
+cmath
+-
+coin.h
+/home/mani/School/COP3503/Homework/Final/cop3503project/src/vision/coin.h
+
+/home/mani/School/COP3503/Homework/Final/cop3503project/src/vision/coin.h
+iostream
+-
+stdio.h
+-
+string
+-
+opencv2/opencv.hpp
+-
+vector
+-
+map
+-
+cmath
+-
+

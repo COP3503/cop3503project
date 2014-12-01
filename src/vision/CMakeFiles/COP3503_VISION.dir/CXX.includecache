@@ -1,0 +1,30 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/mani/School/COP3503/Homework/Final/cop3503project/src/vision/binarize.cpp
+stdio.h
+-
+opencv2/opencv.hpp
+-
+iostream
+-
+vector
+-
+binarize.h
+/home/mani/School/COP3503/Homework/Final/cop3503project/src/vision/binarize.h
+
+/home/mani/School/COP3503/Homework/Final/cop3503project/src/vision/binarize.h
+string
+-
+map
+-
+vector
+-
+opencv2/opencv.hpp
+-
+

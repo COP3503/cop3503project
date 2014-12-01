@@ -1,0 +1,2 @@
+/home/mani/School/COP3503/Homework/Final/cop3503project/src/vision/CMakeFiles/COP3503_VISION.dir
+/home/mani/School/COP3503/Homework/Final/cop3503project/src/vision/CMakeFiles/vision_test.dir
