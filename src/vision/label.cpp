@@ -13,7 +13,7 @@ void update_probability_map(std::map<std::string, double>  input_map, std::map<s
     }
 }
 
-std::string label(Mat & mask, Mat & original_image, std::vector<map<std::string, double> maps) {
+std::string label(std::vector< std::map< std::string, double > > maps) {
     /* "maps" is a vector that contains a vector of maps which the labeller will label */
 
     // Non-normalized probability sum
@@ -22,13 +22,14 @@ std::string label(Mat & mask, Mat & original_image, std::vector<map<std::string,
     };
 
     // Aggregate probabilities
-    for (int i = 0; i < maps.length(); i++) {
-        update_probability_map(maps[i], probablities);
+    for (int i = 0; i < maps.size(); i++) {
+        update_probability_map(maps[i], probabilities);
     }
 
     // Choose maximum (Does not check for edge-cases, assumes we've made sufficient distinction)
     double maximum = 0.0;
     std::string choice = ""; // Will contain a string like "penny"
+    std::map<string, double>::iterator it;
     for (it = probabilities.begin(); it != probabilities.end(); it++) {
         if (it->second > maximum) {
             maximum = it->second;
