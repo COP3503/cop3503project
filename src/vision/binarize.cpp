@@ -2,7 +2,8 @@
 #include <opencv2/opencv.hpp>
 #include <iostream>
 #include <vector>
-#include "binarize.h"
+// #include "binarize.h"
+#include "vision.h"
 
 using namespace cv;
 

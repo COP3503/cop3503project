@@ -9,8 +9,10 @@ if(MAKE_TESTS)
     add_executable (vision_test
         vision_test.cpp
         binarize.cpp
+        label.cpp
         ${PROJECT_SOURCE_DIR}/test/coins_1.jpg
     )
     target_link_libraries(vision_test ${OpenCV_Libs} ${OpenCV_LIBRARIES})
 
 ENDIF(MAKE_TESTS)  # Or something like that
+

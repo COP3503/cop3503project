@@ -3,8 +3,7 @@
 #include <string>
 #include <map>
 #include <vector>
-#include "binarize.h"
-#include "label.cpp"
+#include "vision.h"
 
 /* 
     This file contains unit tests for the vision code

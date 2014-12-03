@@ -6,7 +6,16 @@
 #include <vector>
 #include <opencv2/opencv.hpp>
 
+/* binarize.cpp --------------------------- */
 std::vector<cv::Mat*> get_hough_masks(cv::Mat);
+/* ---------------------------------------- */
+
+
+
+/* label.cpp --------------------------- */
+void update_probability_map(std::map<std::string, double> &input_map, std::map<std::string, double> &tracking_map);
+std::string label(std::vector< std::map< std::string, double > > maps);
+/* ------------------------------------- */
 
 /* TODOs:
 
@@ -43,10 +52,6 @@ std::vector<cv::Mat*> get_hough_masks(cv::Mat);
     Machine learning
 
     Someone needs to find training images
-
-
-
-
 
 */
     
