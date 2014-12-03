@@ -4,6 +4,7 @@
 #include <map>
 #include <vector>
 #include "binarize.h"
+#include "label.cpp"
 
 /* 
     This file contains unit tests for the vision code
@@ -29,5 +30,18 @@ int main(int argc, char* argv[]) {
     waitKey(0);
   }
   waitKey(0);
+  
+   std::map<std::string, double> sampleDiamResults = {
+        {"penny", 0.90}, {"nickel", 0.3}, {"dime", 0.98}, {"quarter", 0.2}
+    };
+   std::map<std::string, double> sampleColorResults = {
+        {"penny", 0.1}, {"nickel", 0.3}, {"dime", 0.3}, {"quarter", 0.3}
+    };
+   std::vector< std::map<std::string, double> > sampleInput = {
+       {sampleDiamResults}, {sampleColorResults}
+   };
+   
+   std::cout << "Test Result: " << label(sampleInput) << std::endl;
+   
   return 0;
 }
