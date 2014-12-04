@@ -3,8 +3,10 @@ find_package( OpenCV REQUIRED )
 
 add_subdirectory (vision)
 
-
-#add_executable( data data.cpp )
-#add_executable( coin coin.h )
-#target_link_libraries( data ${OpenCV_LIBS} )
-#target_link_libraries( coin ${OpenCV_LIBS} )
+add_executable (mainTest
+    mainTest.cpp
+    Data.cpp
+    coin.cpp
+    ${PROJECT_SOURCE_DIR}/test/coins_1.jpg
+)
+    target_link_libraries(mainTest ${OpenCV_Libs} ${OpenCV_LIBRARIES})
