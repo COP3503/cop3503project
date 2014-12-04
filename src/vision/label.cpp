@@ -37,10 +37,10 @@ std::string label(std::vector< std::map< std::string, double > > maps) {
     std::string choice = ""; // Will contain a string like "penny"
     std::map<std::string, double>::iterator it;
     for (it = probabilities.begin(); it != probabilities.end(); it++) {
-        // if (it->second > maximum) {
-        //     maximum = it->second;
-        //     choice = it->first;
-        // }
+        if (it->second > maximum) {
+            maximum = it->second;
+            choice = it->first;
+        }
     }
     return choice;
 }
