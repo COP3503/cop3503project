@@ -1,36 +1,61 @@
 #include <stdio.h>
 #include <opencv2/opencv.hpp>
 #include <iostream>
-#include <binarize.h>
+#include "Data.h"
+#include "vision/binarize.cpp"
+#include "vision/label.cpp"
 
 using namespace cv;
 
-void Data::Data(string imgPath) {
-    mainImage imread(path);
-    binaryArray get_hough_masks(mainImage);
-    piggyBank = fillPiggyBank(binary);
-    labeller(piggyBank);
+Data::Data(string imgPath) {
+    mainImage = imread(imgPath);
+    coinMasks = get_hough_masks(mainImage);
+    piggyBank = fillPiggyBank(coinMasks);
+    compareCoins(piggyBank);
+    for (auto coin = piggyBank.begin(); coin != piggyBank.end(); coin++) {
+        coin->setDenomination(label(coin->getProbVector()));
+        std::cout << coin->denomination << std::endl;
+    }
+    //label(piggyBank);
 }
 
-vector<coin> Data::fillPiggyBank(vector<Mat*> binaryArray) {
-    for ( Mat* bin : binaryArray ) {
-        piggyBank.push_back(Coin(bin));
+void compareCoins(vector<Coin> piggyBank) {
+    int size = piggyBank.size();
+    for (int i = 0; i < size; i++) {
+        for (int j = 0; j < size; j++) {
+            if (i != j) {
+                piggyBank[i].compare(piggyBank[j]);
+            }
+        }
     }
+
+    for (int i = 0; i < size
+            ; i++) {
+        piggyBank[i].bestProb();
+        piggyBank[i].printProbs();
+    }
+}
+
+vector<Coin> Data::fillPiggyBank(vector<Mat*> coinMasks) {
+    for (auto mask = coinMasks.begin(); mask != coinMasks.end(); mask++) {
+        piggyBank.push_back(Coin(**mask));
+    }
+    return piggyBank;
 }
 
 double Data::sumCoins() {
     double value = 0;
-    for ( Coin coin : piggyBank ) {
-        value += coin.getDollarValue();
+    for (auto coin = piggyBank.begin(); coin != piggyBank.end(); coin++) {
+        value += coin->getDollarValue();
     }
     return value;
 }
 
 double Data::countDenomination(string denom) {
     double count = 0;
-    for ( Coin coin : piggyBank ) {
-        if (coin.getDenomination().compare(denom)) 
-        {
+    vector<Coin>::iterator coin;
+    for (int i = 0; i < piggyBank.size(); i++) { //= piggyBank.begin(); coin != piggyBank.end(); coin++) {
+        if (piggyBank[i].getDenomination().compare(denom)) {
             count++;
         }
     }

@@ -1,22 +1,31 @@
 #include <stdio.h>
 #include <opencv2/opencv.hpp>
 #include <iostream>
+#include <vector>
+#include "coin.h"
 
 using namespace cv;
 
 class Data {
 public:
-    void Data(string);
+    Data(string);
     //void getImage();
     double sumCoins();
-    Mat image;
-    vector<Mat*> binary;
-    vector<coin> piggyBank;
+    vector<Coin> fillPiggyBank(vector<Mat*>);
+    double countDenomination(string);
+    //void compareCoins(Coin, int);
+    Mat mainImage;
+    vector<Mat*> coinMasks;
+    vector<Coin> piggyBank;
     
 };
 
-void Data::Data(string);
+void compareCoins(vector<Coin>);
+
+//Data::Data(string){};
 
 //void Data::getImage();
 
-vector<coin> Data::fillPiggyBank(vector<Mat*>);
+//vector<Coin> Data::fillPiggyBank(vector<Mat*>);
+
+//double Data::countDenomination(string);
