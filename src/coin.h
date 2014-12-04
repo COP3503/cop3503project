@@ -7,7 +7,6 @@
 #include <cmath>
 
 using namespace cv;
-
 using namespace std;
 
 class Coin{
@@ -21,7 +20,7 @@ public:
   //order starting from 1: penny, nickel, dime, quarter
   vector<double> allProbabilities[4];
   vector<double> finalProbabilities;
-  map<string,double> diameterMap;
+  vector< map<string,double> > probVector;
 
   //Constructor
   Coin(Mat mask);
@@ -30,6 +29,8 @@ public:
 
   //Sets the denomination for a coin
   void setDenomination(string name);
+  
+  void appendProbVector(map<string, double>);
 
   string getDenomination();
   
@@ -37,7 +38,7 @@ public:
 
   double getDiameter();
 
-  map<string,double> getDiameterMap();
+  vector< map<string,double> > getProbVector();
 
   Mat getMask();
 
@@ -53,7 +54,4 @@ public:
   //troubleshooting function
   void printProbs();
 };
-
-
-
 

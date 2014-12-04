@@ -49,6 +49,10 @@ void Coin::setDenomination(string name){
   denomination = name;
 };
 
+void Coin::appendProbVector(map<string, double> newProb) {
+    probVector.push_back(newProb);
+}
+
 string Coin:: getDenomination(){
   return denomination;
 };
@@ -61,8 +65,8 @@ double Coin::getDiameter(){
   return diameter;
 };
 
-map<string,double> Coin::getDiameterMap(){
-  return diameterMap;
+vector< map<string,double> > Coin::getProbVector(){
+  return probVector;
 };
 
 Mat Coin::getMask(){
@@ -78,6 +82,7 @@ void Coin::updateProbablities(string denomination, double Prob){
 
 void Coin::bestProb(){
   string name[4] = {"penny","nickel","dime","quarter"};
+  std::map<string, double> bestMap;
   double max;
   for(int i = 0; i<4; i++){
     int size = allProbabilities[i].size();
@@ -92,9 +97,10 @@ void Coin::bestProb(){
 	}
       }
       finalProbabilities.push_back(max);
-      diameterMap[name[i]]=max;
+      bestMap[name[i]]=max;
     }
   }
+  this->probVector.push_back(bestMap);
 };
 
 void Coin::printProbs(){
@@ -143,40 +149,18 @@ void Coin::compare(Coin B){
 };
 
 //Diameter compare
-void compareCoins(Coin array[], int size){
-  for(int i = 0; i<size; i++){
-    for(int j = 0; j<size; j++){
-      if(i != j){
-	array[i].compare(array[j]);
-      }
-    }
-  }
-
-  for(int i = 0; i<size
-; i++){
-    array[i].bestProb();
-    array[i].printProbs();
-  }
-}
-
-//Test Case
-int main(){
-
-  Mat img1 = imread("/home/mani/School/COP3503/Homework/Final/cop3503project/test/coins_1_mask_1.png");
-  Mat img2 = imread("/home/mani/School/COP3503/Homework/Final/cop3503project/test/coins_1_mask_2.png");
-  Mat img3 = imread("/home/mani/School/COP3503/Homework/Final/cop3503project/test/coins_1_mask_3.png");
-
-  Coin coinArray[3]{{img1},{img2},{img3}};
-
-  compareCoins(coinArray,3);
-
-  for(int i = 0; i<3; i++){
-    cout<<"Coin"<<i<<" Probs"<<endl; 
-    cout<<"Penny% = "<<coinArray[i].finalProbabilities.at(0)<<endl;
-    cout<<"Nickel% = "<<coinArray[i].finalProbabilities.at(1)<<endl;
-    cout<<"Dime% = "<<coinArray[i].finalProbabilities.at(2)<<endl;
-    cout<<"Quarter% = "<<coinArray[i].finalProbabilities.at(3)<<endl;
-    cout<<endl;
-  }
-  return 0;
-}
+//void compareCoins(Coin array[], int size){
+//  for(int i = 0; i<size; i++){
+//    for(int j = 0; j<size; j++){
+//      if(i != j){
+//	array[i].compare(array[j]);
+//      }
+//    }
+//  }
+//
+//  for(int i = 0; i<size
+//; i++){
+//    array[i].bestProb();
+//    array[i].printProbs();
+//  }
+//}
