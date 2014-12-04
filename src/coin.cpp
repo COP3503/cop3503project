@@ -47,6 +47,7 @@ void Coin::setDenomination(string name){
   if (name=="nickle") dollarValue =.05;
   if (name=="penny") dollarValue =.01;
   denomination = name;
+  cout<<"denomination = "<<denomination<<endl;
 };
 
 void Coin::appendProbVector(map<string, double> newProb) {
@@ -104,15 +105,20 @@ void Coin::bestProb(){
 };
 
 void Coin::printProbs(){
-  for(int i = 1; i<=4; i++){
+  for(int i = 0; i<4; i++){
     int size = allProbabilities[i].size();
-    for(int j = 1; j<=size; j++){
+    cout<<"Coin"<<i<<endl;
+    for(int j = 0; j<size; j++){
+      cout<<"subProb"<<j<<" = "<<allProbabilities[i].at(j)<<endl;
     }
+    cout<<endl;
   }
 
   int size2 = finalProbabilities.size();
 
-  for(int j = 1; j<=size2; j++){
+  for(int j = 0; j<size2; j++){
+    cout<<"Coin"<<j<<endl;
+    cout<<finalProbabilities.at(j)<<endl;;
   }
 };
 
