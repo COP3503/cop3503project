@@ -20,7 +20,7 @@ public:
     
 };
 
-void compareCoins(vector<Coin>);
+void compareCoins(vector<Coin>&);
 
 //Data::Data(string){};
 
