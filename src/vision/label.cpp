@@ -15,7 +15,7 @@ void update_probability_map(std::map<std::string, double> &input_map, std::map<s
 
     std::map<std::string, double>::iterator it;
     for (it = tracking_map.begin(); it != tracking_map.end(); it++) {
-        // it->second += input_map[it->first];
+        it->second += input_map[it->first];
     }
 }
 
