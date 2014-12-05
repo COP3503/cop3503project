@@ -101,7 +101,7 @@ void Coin::bestProb(){
       bestMap[name[i]]=max;
     }
   }
-  this->probVector.push_back(bestMap);
+  probVector.push_back(bestMap);
 };
 
 void Coin::printProbs(){
