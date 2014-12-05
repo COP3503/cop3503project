@@ -45,8 +45,8 @@ public:
   //Adds a probability of a coin type to its appropriate coin vector
   void updateProbablities(string denomination, double Prob);
 
-  //Finds the best probability of each coin type for a coin and adds them to the finalProbabilites vector
-  void bestProb();
+  //Finds the best probability of each coin type for a coin and adds them to the finalProbabilites vector takes in an option of either "max" or "avg" to determine how the final probabilty is calculated
+  void bestProb(string option);
 
   //Compare 2 coins and find relative confidence
   void compare(Coin B);
@@ -54,4 +54,3 @@ public:
   //troubleshooting function
   void printProbs();
 };
-
