@@ -81,27 +81,47 @@ void Coin::updateProbablities(string denomination, double Prob){
   if (denomination.compare("quarter")==0) allProbabilities[3].push_back(Prob);
 };
 
-void Coin::bestProb(){
+void Coin::bestProb(string option){
   string name[4] = {"penny","nickel","dime","quarter"};
   std::map<string, double> bestMap;
   double max;
-  for(int i = 0; i<4; i++){
-    int size = allProbabilities[i].size();
-    if(size == 0){
-      max = 0;
-    }
-    else{
-      max = allProbabilities[i].at(0);
-      for(int j = 1; j<=size-1; j++){
-	if(allProbabilities[i].at(j) > max){
-	  max = allProbabilities[i].at(j);
-	}
+
+  //option to update final probabilies with the best of a coins probabilities
+  if(option.compare("max") == 0){
+    for(int i = 0; i<4; i++){
+      int size = allProbabilities[i].size();
+      if(size == 0){
+	max = 0;
       }
-      finalProbabilities.push_back(max);
-      bestMap[name[i]]=max;
+      else{
+	max = allProbabilities[i].at(0);
+	for(int j = 1; j<=size-1; j++){
+	  if(allProbabilities[i].at(j) > max){
+	    max = allProbabilities[i].at(j);
+	  }
+	}
+	finalProbabilities.push_back(max);
+	bestMap[name[i]]=max;
+      }
+    }
+    this->probVector.push_back(bestMap);
+  }
+
+  //option to update final probabilites with the average of a coins probabilites
+  if(option.compare("avg") == 0){
+    int compNum = 0;
+    for(int i = 0; i<4; i++){
+      compNum = compNum + allProbabilities[i].size();
+    }
+
+    for(int i = 0; i<4; i++){
+      double sum = 0;
+      for(int j =0; i<4; j++){
+	sum = allProbabilities[i].at(j) + sum;
+      }
+      this->probVector.push_back(sum/compNum);
     }
   }
-  this->probVector.push_back(bestMap);
 };
 
 void Coin::printProbs(){
