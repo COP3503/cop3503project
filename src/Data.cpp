@@ -11,15 +11,17 @@ Data::Data(string imgPath) {
     mainImage = imread(imgPath);
     coinMasks = get_hough_masks(mainImage);
     piggyBank = fillPiggyBank(coinMasks);
-    compareCoins(piggyBank);
+    compareCoins(piggyBank); 
     for (auto coin = piggyBank.begin(); coin != piggyBank.end(); coin++) {
-        coin->setDenomination(label(coin->getProbVector()));
-        std::cout << coin->denomination << std::endl;
+        vector< map<string, double> > coinProbs = coin->getProbVector();
+        string denomination = label(coinProbs);
+        coin->setDenomination(denomination);
+        std::cout << coin->getDenomination() << std::endl;
     }
     //label(piggyBank);
 }
 
-void compareCoins(vector<Coin> piggyBank) {
+void compareCoins(vector<Coin> &piggyBank) {
     int size = piggyBank.size();
     for (int i = 0; i < size; i++) {
         for (int j = 0; j < size; j++) {
@@ -29,10 +31,9 @@ void compareCoins(vector<Coin> piggyBank) {
         }
     }
 
-    for (int i = 0; i < size
-            ; i++) {
+    for (int i = 0; i < size; i++) {
         piggyBank[i].bestProb();
-        piggyBank[i].printProbs();
+        //piggyBank[i].printProbs();
     }
 }
 
