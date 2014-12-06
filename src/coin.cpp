@@ -42,12 +42,12 @@ Coin::Coin(Mat mask){
 };
 
 void Coin::setDenomination(string name){
-  if (name=="quarter") dollarValue = .25;
-  if (name=="dime") dollarValue = .1;
-  if (name=="nickle") dollarValue =.05;
-  if (name=="penny") dollarValue =.01;
+  if (name == "quarter") this->dollarValue = 0.25;
+  if (name == "dime")    this->dollarValue = 0.10;
+  if (name == "nickel")  this->dollarValue = 0.05;
+  if (name == "penny")   this->dollarValue = 0.01;
   denomination = name;
-  cout<<"denomination = "<<denomination<<endl;
+  //cout << "denomination = " << denomination << endl;
 };
 
 void Coin::appendProbVector(map<string, double> newProb) {
