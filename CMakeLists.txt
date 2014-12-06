@@ -3,6 +3,7 @@ project (CoinCounter)
 
 option (MAKE_TESTS 
         "Compile tests for computer vision code" ON)
+option (WITH_GTK "Enable GTK Version" On)
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
 add_subdirectory (src)

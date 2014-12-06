@@ -8,6 +8,20 @@
 //#include "vision/label.cpp"
 
 using namespace std;
+using namespace cv;
+#define cop_H_Low 2.5
+#define cop_H_High 2.5
+#define cop_S_Low 99
+#define cop_S_High 99
+#define cop_V_Low 173
+#define cop_V_High 173
+
+/*#define silver_H_Low
+#define silver_H_High
+#define silver_S_Low
+#define silver_S_High
+#define silver_V_Low
+#define silver_V_High*/
 
 int main(int argc, char* argv[]) {
 
@@ -16,6 +30,20 @@ int main(int argc, char* argv[]) {
     Data data = Data(imgPath);
     cout << "Captured coins are worth: $" << data.sumCoins();
     
+    Mat input_image = imread("../test/coins_1.jpg");
+    Mat input_image_HSV, input_image_HSVmask_Copper, input_image_HSVmask_Silver;
+
+
+    cvtColor(input_image, input_image_HSV, CV_BGR2HSV);
+    // adaptiveThreshold(InputArray src, OutputArray dst, double maxValue, int adaptiveMethod, int thresholdType, int blockSize, double C)
+
+    //inrange for copper
+    inRange(input_image_HSV, Scalar(cop_H_Low, cop_S_Low, cop_V_Low), Scalar(cop_H_High, cop_S_High, cop_V_High),input_image_HSVmask_Copper);
+
+    //inragne for silver
+    
+
+    imshow("copper color mask", input_image_HSV);
 
     //    Mat img1 = imread("../test/coins_1_mask_1.png");
     //    Mat img2 = imread("../test/coins_1_mask_2.png");

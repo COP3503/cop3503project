@@ -31,7 +31,7 @@ int imgDisplay(Mat image, string title) {
 
 int main() {
     printf("Printing image using path function.\n");
-    string path = "test/test.jpg";
+    string path = "./test/test.jpg";
     int success = imgDisplay(path, "Test Image");
     if (success == 0) {
         printf("Test Passed \n");
