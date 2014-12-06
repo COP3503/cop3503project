@@ -2,7 +2,6 @@
 #include <opencv2/opencv.hpp>
 #include <iostream>
 #include <vector>
-// #include "binarize.h"
 #include "vision.h"
 #include <string.h>
 
@@ -23,7 +22,7 @@ using namespace cv;
 #define sil_V_High 173
 
 
-std::vector<Mat*> get_hough_masks(Mat input_image ) {
+std::vector<Mat*> get_hough_masks(Mat input_image) {
   /* Given an RGB input image, returns a vector of images 
     Example:
       vector<Mat*> masks = get_hough_masks(input_image);
@@ -50,10 +49,10 @@ std::vector<Mat*> get_hough_masks(Mat input_image ) {
     // Get center of the coin
     Point center(cvRound(circles[i][0]), cvRound(circles[i][1]));
     int radius = cvRound(circles[i][2]);  // Mani: This is the radius of the coin
-    // Circle center
-    circle(input_image, center, 3, Scalar(0, 255, 0), -1, 8, 0);
-    // Circle outline
-    circle(input_image, center, radius, Scalar(0, 0, 255), 3, 8, 0);
+    // Draw a circle's center (This draws on the original image)
+    // circle(input_image, center, 3, Scalar(0, 255, 0), -1, 8, 0);
+    // Draw a circle's outline (This draws on the original image)
+    // circle(input_image, center, radius, Scalar(0, 0, 255), 3, 8, 0);
     // Draw circle mask onto image
     circle(*mask, center, radius, 255, -1, 8, 0);
 
