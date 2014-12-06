@@ -32,7 +32,7 @@ void compareCoins(vector<Coin> &piggyBank) {
     }
 
     for (int i = 0; i < size; i++) {
-        piggyBank[i].bestProb("avg");
+        piggyBank[i].bestProb("max");
         //piggyBank[i].printProbs();
     }
 }
