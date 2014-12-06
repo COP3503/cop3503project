@@ -14,7 +14,7 @@ public:
   /********Variables and objects********/
   int diameter;
   string denomination;
-  int dollarValue;
+  double dollarValue;
   Mat Mask;
 
   //order starting from 1: penny, nickel, dime, quarter
