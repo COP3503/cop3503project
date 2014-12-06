@@ -7,11 +7,15 @@
 //#include "vision/binarize.cpp"
 //#include "vision/label.cpp"
 
+using namespace std;
+
 int main(int argc, char* argv[]) {
 
-    std::string imgPath = "test/coins_1.jpg";
+    string imgPath = "test/coins_1.jpg";
     imshow("input image", imread(imgPath));
     Data data = Data(imgPath);
+    cout << "Captured coins are worth: $" << data.sumCoins();
+    
 
     //    Mat img1 = imread("../test/coins_1_mask_1.png");
     //    Mat img2 = imread("../test/coins_1_mask_2.png");
