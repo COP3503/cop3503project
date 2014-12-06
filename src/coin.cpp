@@ -108,6 +108,7 @@ void Coin::bestProb(string option){
   }
 
   //option to update final probabilites with the average of a coins probabilites
+  /*
   if(option.compare("avg") == 0){
     int compNum = 0;
     for(int i = 0; i<4; i++){
@@ -122,6 +123,7 @@ void Coin::bestProb(string option){
       this->probVector.push_back(sum/compNum);
     }
   }
+  */
   probVector.push_back(bestMap);
 };
 
