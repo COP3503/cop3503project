@@ -33,7 +33,7 @@ void compareCoins(vector<Coin> &piggyBank) {
     }
 
     for (int i = 0; i < size; i++) {
-        piggyBank[i].bestProb("max");
+        piggyBank[i].bestProb("avg");
         //piggyBank[i].printProbs();
     }
 }
@@ -58,10 +58,11 @@ int Data::getNumOfCoins() {
 }
 
 void Data::displayCoin(int index) {
-    while (index < piggyBank.size()) {
+    if (index < piggyBank.size()) {
         string title;
-        title = "Coin " + index + string(" is a ") + piggyBank[index].getDenomination();
+        title = "Coin is a " + piggyBank[index].getDenomination();
         showCoin(mainImage, *coinMasks[index], title);
+        waitKey(0);
     }
 }
 
