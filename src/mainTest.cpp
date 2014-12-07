@@ -29,7 +29,12 @@ int main(int argc, char* argv[]) {
     imshow("input image", imread(imgPath));
     Data data = Data(imgPath);
     cout << "Captured coins are worth: $" << data.sumCoins();
+    for (int i = 0; i < data.getNumOfCoins(); i++) {
+        data.displayCoin(i);
+        //waitKey(0);
+    }
     
+    /*
     Mat input_image = imread("../test/coins_1.jpg");
     Mat input_image_HSV, input_image_HSVmask_Copper, input_image_HSVmask_Silver;
 
@@ -67,6 +72,6 @@ int main(int argc, char* argv[]) {
     //    }
 
 
-
+     */
     return 0;
 }
