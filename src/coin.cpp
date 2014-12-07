@@ -108,18 +108,19 @@ void Coin::bestProb(string option){
 
   //option to update final probabilites with the average of a coins probabilites
   if(option.compare("avg") == 0){
-    int compNum = 0;
-    for(int i = 0; i<4; i++){
+    /*    for(int i = 0; i<4; i++){
       compNum = compNum + allProbabilities[i].size();
-    }
+      }*/
 
     for(int i = 0; i<4; i++){
       double sum = 0;
-      for(int j =0; j<4; j++){
+      int compNum = allProbabilities[i].size();
+      for(int j =0; j<compNum; j++){
 	sum = allProbabilities[i].at(j) + sum;
       }
       finalProbabilities.push_back(sum/compNum);
-      bestMap[name[i]]=max;
+      bestMap[name[i]]=sum/compNum;
+      cout<<"coin"<<i<<"sum = "<<sum<<endl;
     }
   }
   this->probVector.push_back(bestMap);
@@ -136,10 +137,13 @@ void Coin::printProbs(){
   }
 
   int size2 = finalProbabilities.size();
+  string name[4] = {"penny","nickel","dime","quarter"};
 
   for(int j = 0; j<size2; j++){
-    cout<<"Coin"<<j<<endl;
-    cout<<finalProbabilities.at(j)<<endl;;
+    cout<<"Final Probs"<<endl;
+    //    cout<<finalProbabilities.at(j)<<endl;
+    cout<<probVector.front()[name[j]]<<"% "<<name[j]<<endl;
+    cout<<endl;
   }
 };
 
