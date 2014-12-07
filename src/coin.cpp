@@ -83,7 +83,7 @@ void Coin::updateProbablities(string denomination, double Prob){
 
 void Coin::bestProb(string option){
   string name[4] = {"penny","nickel","dime","quarter"};
-  std::map<string, double> bestMap;
+  map<string, double> bestMap;
   double max;
 
   //option to update final probabilies with the best of a coins probabilities
@@ -104,11 +104,9 @@ void Coin::bestProb(string option){
 	bestMap[name[i]]=max;
       }
     }
-    this->probVector.push_back(bestMap);
   }
 
   //option to update final probabilites with the average of a coins probabilites
-  /*
   if(option.compare("avg") == 0){
     int compNum = 0;
     for(int i = 0; i<4; i++){
@@ -117,14 +115,14 @@ void Coin::bestProb(string option){
 
     for(int i = 0; i<4; i++){
       double sum = 0;
-      for(int j =0; i<4; j++){
+      for(int j =0; j<4; j++){
 	sum = allProbabilities[i].at(j) + sum;
       }
-      this->probVector.push_back(sum/compNum);
+      finalProbabilities.push_back(sum/compNum);
+      bestMap[name[i]]=max;
     }
   }
-  */
-  probVector.push_back(bestMap);
+  this->probVector.push_back(bestMap);
 };
 
 void Coin::printProbs(){
