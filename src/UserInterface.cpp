@@ -39,54 +39,58 @@ int displayInterface() {
 }
 
 int mainMenu() {
-    int n = 0;
-    cout <<"\nFrom here you can review our analysis by choosing one of the following options:\n";
-    cout <<"    1 : Show me each of the coins\n";
-    cout <<"    2 : Show me an individual coin\n";
-    cout <<"    3 : Show me the denominational breakdown (how many coins of each type)\n";
-    cout <<"    4 : Correct a mis-identified coin\n";
-    cout <<"    5 : Recalculate the total value\n\n";
-    cin >> n;
-    cout << "\n\n";
-    if (n==1) data.displayAll();
-    if (n==2) {
-        int choice = 0;
-        cout << "We have detected " << getLength() << " coin(s)./n"; //replace
-        cout << "Please select one by inputing a number between 0 and " << getLength()<< "\n";
-        cin >> choice;
-        cout << "Displaying coin " << choice << "\n";
-        data.displayCoin(choice);
+    int n = 1;
+    while (n==1 || n==2 || n==3 || n==4 || n==5){
+        cout <<"\nFrom here you can review our analysis by choosing one of the following options:\n";
+        cout <<"    1 : Show me each of the coins\n";
+        cout <<"    2 : Show me an individual coin\n";
+        cout <<"    3 : Show me the denominational breakdown (how many coins of each type)\n";
+        cout <<"    4 : Correct a mis-identified coin\n";
+        cout <<"    5 : Recalculate the total value\n";
+        cout <<"    6 : Exit menu\n\n";
+        cin >> n;
+        cout << "\n\n";
+        if (n==1) data.displayAll();
+        if (n==2) {
+            int choice = 0;
+            cout << "We have detected " << getLength() << " coin(s)./n"; //replace
+            cout << "Please select one by inputing a number between 0 and " << getLength()<< "\n";
+            cin >> choice;
+            cout << "Displaying coin " << choice << "\n";
+            data.displayCoin(choice);
+        }
+        if (n==3) {
+            cout << "Our analysis has detected a total of (##) coins of the following denominations:\n";
+            cout << "Quarters: " << data.countDenomination("quarter") << "\n";
+            cout << "Dimes: " << data.countDenomination("dime") << "\n";
+            cout << "Nickles: " << data.countDenomination("nickle") << "\n";
+            cout << "Pennies: " << data.countDenomination("penny") << "\n";
+        }
+        if (n==4) {
+            int input = 0;
+            int inputTwo = 0;
+            cout << "Whoops, we may have made an error. Choose a coin to re-identify.\n";
+            cout << "Please select a coin by entering a number between 0 and" << getLength() << \n";
+            cout << "Coin to correct:\n";
+            cin >> input;
+            data.displayCoin(input);
+            cout << "Select the proper denomination: \n"
+            cout << "    1 : Quarter\n    2 : Dime\n    3 : Nickel\n    4 : Penny\n    0 : NO CHANGE\n";
+            cout << "Make a choice\n\n";
+            data.correctValue;
+            cout << "\n\nYour revised total is $" << data.sumCoins() << "\n";
+        }
+        if (n==5) {
+            int lengthc = data.countNumOfCoins();
+            cout << "We have detected " << lengthc << " coin(s), with a total value of $"<< data.sumCoins() << "\n";
+        }
     }
-    if (n==3) {
-        cout << "Our analysis has detected a total of (##) coins of the following denominations:\n";
-        cout << "Quarters: " << data.countDenomination("quarter") << "\n";
-        cout << "Dimes: " << data.countDenomination("dime") << "\n";
-        cout << "Nickles: " << data.countDenomination("nickle") << "\n";
-        cout << "Pennies: " << data.countDenomination("penny") << "\n";
-    }
-    if (n==4) {
-        int input = 0;
-        int inputTwo = 0;
-        cout << "Whoops, we may have made an error. Choose a coin to re-identify.\n";
-        cout << "Please select a coin by entering a number between 0 and" << getLength() << \n";
-        cout << "Coin to correct:\n";
-        cin >> input;
-        data.displayCoin(input);
-        cout << "Select the proper denomination: \n"
-        cout << "    1 : Quarter\n    2 : Dime\n    3 : Nickel\n    4 : Penny\n    0 : NO CHANGE\n";
-        cout << "Make a choice\n\n";
-        data.correctValue;
-        cout << "\n\nYour revised total is $" << data.sumCoins() << "\n";
-    }
-    if (n==5) {
-        int lengthc = data.countNumOfCoins();
-        cout << "We have detected " << lengthc << " coin(s), with a total value of $"<< data.sumCoins() << "\n";
-    }
+    return 0;
 }
 
 int main()
 {
     displayInterface();  
     mainMenu();
-   return 0;
+    return 0;
 }
