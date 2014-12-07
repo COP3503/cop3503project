@@ -18,7 +18,7 @@ std::string label(std::vector< std::map< std::string, double > > maps);
 /* visualization.cpp-------------------- 
     Contains tools for visualizing images
 */
-void showCoin(cv::Mat original_image, cv::Mat mask);
+void showCoin(cv::Mat original_image, cv::Mat mask, std::string);
 /* ------------------------------------- */
 
 
