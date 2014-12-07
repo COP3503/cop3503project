@@ -1,9 +1,11 @@
 #include <stdio.h>
+#include <string>
 #include <opencv2/opencv.hpp>
 #include <iostream>
 #include "Data.h"
 #include "vision/binarize.cpp"
 #include "vision/label.cpp"
+#include "vision/visualization.cpp"
 
 using namespace cv;
 
@@ -16,9 +18,8 @@ Data::Data(string imgPath) {
         vector< map<string, double> > coinProbs = coin->getProbVector();
         string denomination = label(coinProbs);
         coin->setDenomination(denomination);
-        std::cout << coin->getDenomination() << std::endl;
+        //std::cout << coin->getDenomination() << " = " << coin->getDollarValue() << std::endl;
     }
-    //label(piggyBank);
 }
 
 void compareCoins(vector<Coin> &piggyBank) {
@@ -50,6 +51,18 @@ double Data::sumCoins() {
         value += coin->getDollarValue();
     }
     return value;
+}
+
+int Data::getNumOfCoins() {
+    return piggyBank.size();
+}
+
+void Data::displayCoin(int index) {
+    while (index < piggyBank.size()) {
+        string title;
+        title = "Coin " + index + string(" is a ") + piggyBank[index].getDenomination();
+        showCoin(mainImage, *coinMasks[index], title);
+    }
 }
 
 double Data::countDenomination(string denom) {

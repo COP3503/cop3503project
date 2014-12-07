@@ -11,9 +11,11 @@ public:
     Data(string);
     //void getImage();
     double sumCoins();
-    vector<Coin> fillPiggyBank(vector<Mat*>);
     double countDenomination(string);
+    int getNumOfCoins();
+    void displayCoin(int);
     //void compareCoins(Coin, int);
+    vector<Coin> fillPiggyBank(vector<Mat*>);
     Mat mainImage;
     vector<Mat*> coinMasks;
     vector<Coin> piggyBank;
