@@ -26,11 +26,3 @@ public:
 };
 
 void compareCoins(vector<Coin>&);
-
-//Data::Data(string){};
-
-//void Data::getImage();
-
-//vector<Coin> Data::fillPiggyBank(vector<Mat*>);
-
-//double Data::countDenomination(string);

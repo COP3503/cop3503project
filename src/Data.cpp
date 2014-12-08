@@ -25,6 +25,14 @@ Data::Data(string imgPath) {
     }
 }
 
+// initializes a coin for every image mask into a vector
+vector<Coin> Data::fillPiggyBank(vector<Mat*> coinMasks) {
+    for (auto mask = coinMasks.begin(); mask != coinMasks.end(); mask++) {
+        piggyBank.push_back(Coin(**mask));
+    }
+    return piggyBank;
+}
+
 // starts the diameter comparison process
 void compareCoins(vector<Coin> &piggyBank) {
     int size = piggyBank.size();
@@ -40,14 +48,6 @@ void compareCoins(vector<Coin> &piggyBank) {
     }
 }
 
-// initializes a coin for every image mask into a vector
-vector<Coin> Data::fillPiggyBank(vector<Mat*> coinMasks) {
-    for (auto mask = coinMasks.begin(); mask != coinMasks.end(); mask++) {
-        piggyBank.push_back(Coin(**mask));
-    }
-    return piggyBank;
-}
-
 // adds the dollar value of all coins
 double Data::sumCoins() {
     double value = 0;
@@ -60,6 +60,22 @@ double Data::sumCoins() {
 // returns the number of coins present
 int Data::getNumOfCoins() {
     return piggyBank.size();
+}
+
+// counts the number of each type of coin (I.E. "there are 2 dimes")
+double Data::countDenomination(string denom) {
+    double count = 0;
+    for (int i = 0; i < piggyBank.size(); i++) {
+        if (piggyBank[i].getDenomination().compare(denom) == 0) {
+            count++;
+        }
+    }
+    return count;
+}
+
+// modifies the denomination and dollar value of a particular coin
+void Data::correctCoin(int i, string newDenom) {
+    piggyBank[i].setDenomination(newDenom);
 }
 
 // shows the user an image with all but the specified coin blacked out
@@ -78,20 +94,4 @@ void Data::displayAll() {
         showCoin(mainImage, *coinMasks[i], title);
     }
     //waitKey(0);
-}
-
-// modifies the denomination and dollar value of a particular coin
-void Data::correctCoin(int i, string newDenom) {
-    piggyBank[i].setDenomination(newDenom);
-}
-
-// counts the number of each type of coin (I.E. "there are 2 dimes")
-double Data::countDenomination(string denom) {
-    double count = 0;
-    for (int i = 0; i < piggyBank.size(); i++) {
-        if (piggyBank[i].getDenomination().compare(denom) == 0) {
-            count++;
-        }
-    }
-    return count;
 }
