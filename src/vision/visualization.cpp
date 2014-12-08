@@ -16,5 +16,7 @@ void showCoin(Mat original_image, Mat mask, string title) {
      */
     Mat masked;
     original_image.copyTo(masked, mask);
+    namedWindow(title, WINDOW_AUTOSIZE);
     imshow(title, masked);
+    cvWaitKey(0);
 }
