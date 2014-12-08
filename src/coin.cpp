@@ -47,7 +47,6 @@ void Coin::setDenomination(string name){
   if (name == "nickel")  this->dollarValue = 0.05;
   if (name == "penny")   this->dollarValue = 0.01;
   denomination = name;
-  //cout << "denomination = " << denomination << endl;
 };
 
 void Coin::appendProbVector(map<string, double> newProb) {
@@ -75,9 +74,9 @@ Mat Coin::getMask(){
 };
 
 void Coin::updateProbablities(string denomination, double Prob){
-  if (denomination.compare("penny") == 0) allProbabilities[0].push_back(Prob);
-  if (denomination.compare("nickel") == 0) allProbabilities[1].push_back(Prob);
-  if (denomination.compare("dime") == 0) allProbabilities[2].push_back(Prob);
+  if (denomination.compare("penny")   == 0) allProbabilities[0].push_back(Prob);
+  if (denomination.compare("nickel")  == 0) allProbabilities[1].push_back(Prob);
+  if (denomination.compare("dime")    == 0) allProbabilities[2].push_back(Prob);
   if (denomination.compare("quarter") == 0) allProbabilities[3].push_back(Prob);
 };
 
@@ -85,7 +84,6 @@ void Coin::bestProb(string option){
   string name[4] = {"penny","nickel","dime","quarter"};
   map<string, double> bestMap;
   double max;
-
   //option to update final probabilies with the best of a coins probabilities
   if(option.compare("max") == 0){
     for(int i = 0; i<4; i++){
@@ -105,14 +103,9 @@ void Coin::bestProb(string option){
       }
     }
   }
-
-  //option to update final probabilites with the average of a coins probabilites
+  //option to update final probabilities with the average of a coins probabilities
   if(option.compare("avg") == 0){
-    /*    for(int i = 0; i<4; i++){
-      compNum = compNum + allProbabilities[i].size();
-      }*/
-
-    for(int i = 0; i<4; i++){
+    for(int i = 0; i < 4; i++){
       double sum = 0;
       int compNum = allProbabilities[i].size();
       for(int j =0; j<compNum; j++){
@@ -120,7 +113,6 @@ void Coin::bestProb(string option){
       }
       finalProbabilities.push_back(sum/compNum);
       bestMap[name[i]]=sum/compNum;
-      //cout<<"coin"<<i<<"sum = "<<sum<<endl;
     }
   }
   this->probVector.push_back(bestMap);
@@ -129,26 +121,25 @@ void Coin::bestProb(string option){
 void Coin::printProbs(){
   for(int i = 0; i<4; i++){
     int size = allProbabilities[i].size();
-    //cout<<"Coin"<<i<<endl;
+    cout<<"Coin"<<i<<endl;
     for(int j = 0; j<size; j++){
-      //cout<<"subProb"<<j<<" = "<<allProbabilities[i].at(j)<<endl;
+      cout<<"subProb"<<j<<" = "<<allProbabilities[i].at(j)<<endl;
     }
-    //cout<<endl;
+    cout<<endl;
   }
 
   int size2 = finalProbabilities.size();
   string name[4] = {"penny","nickel","dime","quarter"};
 
   for(int j = 0; j<size2; j++){
-    //cout<<"Final Probs"<<endl;
-    //    cout<<finalProbabilities.at(j)<<endl;
-    //cout<<probVector.front()[name[j]]<<"% "<<name[j]<<endl;
-    //cout<<endl;
+    cout<<"Final Probs"<<endl;
+    cout<<finalProbabilities.at(j)<<endl;
+    cout<<probVector.front()[name[j]]<<"% "<<name[j]<<endl;
+    cout<<endl;
   }
 };
 
 void Coin::compare(Coin B){
-
   //Ideal coin struct initialization
   double value[4] = {.75, .835, .705, .955};
   string name[4] = {"penny","nickel","dime","quarter"};
@@ -160,8 +151,6 @@ void Coin::compare(Coin B){
     Ideal[i].Difference = abs(value[i/4]-value[i%4]);
     Ideal[i].ScaledDifference = Ideal[i].Difference/((value[i/4]+value[i%4])/2);
   }
-
-  //Coin Compare method
   double dA = diameter;
   double dB = B.getDiameter();
   double ratio = dA/dB;
@@ -178,20 +167,3 @@ void Coin::compare(Coin B){
     }
   }
 };
-
-//Diameter compare
-//void compareCoins(Coin array[], int size){
-//  for(int i = 0; i<size; i++){
-//    for(int j = 0; j<size; j++){
-//      if(i != j){
-//	array[i].compare(array[j]);
-//      }
-//    }
-//  }
-//
-//  for(int i = 0; i<size
-//; i++){
-//    array[i].bestProb();
-//    array[i].printProbs();
-//  }
-//}
