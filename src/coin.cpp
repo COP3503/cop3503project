@@ -120,7 +120,7 @@ void Coin::bestProb(string option){
       }
       finalProbabilities.push_back(sum/compNum);
       bestMap[name[i]]=sum/compNum;
-      cout<<"coin"<<i<<"sum = "<<sum<<endl;
+      //cout<<"coin"<<i<<"sum = "<<sum<<endl;
     }
   }
   this->probVector.push_back(bestMap);
@@ -129,21 +129,21 @@ void Coin::bestProb(string option){
 void Coin::printProbs(){
   for(int i = 0; i<4; i++){
     int size = allProbabilities[i].size();
-    cout<<"Coin"<<i<<endl;
+    //cout<<"Coin"<<i<<endl;
     for(int j = 0; j<size; j++){
-      cout<<"subProb"<<j<<" = "<<allProbabilities[i].at(j)<<endl;
+      //cout<<"subProb"<<j<<" = "<<allProbabilities[i].at(j)<<endl;
     }
-    cout<<endl;
+    //cout<<endl;
   }
 
   int size2 = finalProbabilities.size();
   string name[4] = {"penny","nickel","dime","quarter"};
 
   for(int j = 0; j<size2; j++){
-    cout<<"Final Probs"<<endl;
+    //cout<<"Final Probs"<<endl;
     //    cout<<finalProbabilities.at(j)<<endl;
-    cout<<probVector.front()[name[j]]<<"% "<<name[j]<<endl;
-    cout<<endl;
+    //cout<<probVector.front()[name[j]]<<"% "<<name[j]<<endl;
+    //cout<<endl;
   }
 };
 
