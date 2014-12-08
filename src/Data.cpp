@@ -13,7 +13,7 @@ Data::Data(string imgPath) {
     mainImage = imread(imgPath);
     coinMasks = get_hough_masks(mainImage);
     piggyBank = fillPiggyBank(coinMasks);
-    compareCoins(piggyBank); 
+    compareCoins(piggyBank);
     for (auto coin = piggyBank.begin(); coin != piggyBank.end(); coin++) {
         vector< map<string, double> > coinProbs = coin->getProbVector();
         string denomination = label(coinProbs);
@@ -59,18 +59,28 @@ int Data::getNumOfCoins() {
 
 void Data::displayCoin(int index) {
     if (index < piggyBank.size()) {
-        string title;
-        title = "Coin is a " + piggyBank[index].getDenomination();
+        string title = "Coin is a " + piggyBank[index].getDenomination();
         showCoin(mainImage, *coinMasks[index], title);
         waitKey(0);
     }
 }
 
+void Data::displayAll() {
+    for (int i = 0; i < getNumOfCoins(); i++) {
+        string title = "Coin is a " + piggyBank[i].getDenomination();
+        showCoin(mainImage, *coinMasks[i], title);
+    }
+    waitKey(0);
+}
+
+void Data::correctCoin(int i, string newDenom) {
+    piggyBank[i].setDenomination(newDenom);
+}
+
 double Data::countDenomination(string denom) {
     double count = 0;
-    vector<Coin>::iterator coin;
-    for (int i = 0; i < piggyBank.size(); i++) { //= piggyBank.begin(); coin != piggyBank.end(); coin++) {
-        if (piggyBank[i].getDenomination().compare(denom)) {
+    for (int i = 0; i < piggyBank.size(); i++) {
+        if (piggyBank[i].getDenomination().compare(denom) == 0) {
             count++;
         }
     }

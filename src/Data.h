@@ -14,6 +14,8 @@ public:
     double countDenomination(string);
     int getNumOfCoins();
     void displayCoin(int);
+    void displayAll();
+    void correctCoin(int, string);
     //void compareCoins(Coin, int);
     vector<Coin> fillPiggyBank(vector<Mat*>);
     Mat mainImage;
