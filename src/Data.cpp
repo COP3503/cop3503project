@@ -21,11 +21,11 @@ Data::Data(string imgPath) {
             vector< map<string, double> > coinProbs = coin->getProbVector();
             string denomination = label(coinProbs);
             coin->setDenomination(denomination);
-            //std::cout << coin->getDenomination() << " = " << coin->getDollarValue() << std::endl;
         }
     }
 }
 
+// starts the diameter comparison process
 void compareCoins(vector<Coin> &piggyBank) {
     int size = piggyBank.size();
     for (int i = 0; i < size; i++) {
@@ -35,13 +35,12 @@ void compareCoins(vector<Coin> &piggyBank) {
             }
         }
     }
-
     for (int i = 0; i < size; i++) {
         piggyBank[i].bestProb("avg");
-        //piggyBank[i].printProbs();
     }
 }
 
+// initializes a coin for every image mask into a vector
 vector<Coin> Data::fillPiggyBank(vector<Mat*> coinMasks) {
     for (auto mask = coinMasks.begin(); mask != coinMasks.end(); mask++) {
         piggyBank.push_back(Coin(**mask));
@@ -49,6 +48,7 @@ vector<Coin> Data::fillPiggyBank(vector<Mat*> coinMasks) {
     return piggyBank;
 }
 
+// adds the dollar value of all coins
 double Data::sumCoins() {
     double value = 0;
     for (auto coin = piggyBank.begin(); coin != piggyBank.end(); coin++) {
@@ -57,10 +57,12 @@ double Data::sumCoins() {
     return value;
 }
 
+// returns the number of coins present
 int Data::getNumOfCoins() {
     return piggyBank.size();
 }
 
+// shows the user an image with all but the specified coin blacked out
 void Data::displayCoin(int index) {
     if (index < piggyBank.size()) {
         string title = "Coin is a " + piggyBank[index].getDenomination();
@@ -69,6 +71,7 @@ void Data::displayCoin(int index) {
     }
 }
 
+// shows the user all the coins, one at a time
 void Data::displayAll() {
     for (int i = 0; i < getNumOfCoins(); i++) {
         string title = "Coin is a " + piggyBank[i].getDenomination();
@@ -77,10 +80,12 @@ void Data::displayAll() {
     //waitKey(0);
 }
 
+// modifies the denomination and dollar value of a particular coin
 void Data::correctCoin(int i, string newDenom) {
     piggyBank[i].setDenomination(newDenom);
 }
 
+// counts the number of each type of coin (I.E. "there are 2 dimes")
 double Data::countDenomination(string denom) {
     double count = 0;
     for (int i = 0; i < piggyBank.size(); i++) {

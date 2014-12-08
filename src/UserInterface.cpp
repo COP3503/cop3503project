@@ -8,17 +8,9 @@ string getPicture() {
     string myString;
     getline(cin, myString);
     return myString;
-    //    unsigned int len = myString.length();
-    //    string sub = myString.substr(len - 4, len);
-    //    string subl = myString.substr(len - 5, len);
-    //    if (sub == ".bmp" || sub == ".dib" || subl == ".jpeg" || sub == ".jpg" || sub == ".jpe" || sub == ".jp2" || sub == ".png" || sub == ".pbm" || sub == ".pgm" || sub == ".ppm" || sub.substr(1, 4) == ".sr" || sub == ".ras" || subl == ".tiff" || sub == ".tif") {
-    //        return myString;
-    //    }
-    //    return "void";
 }
 
 //converts int to string
-
 string int2str(int in) {
     string s;
     stringstream out;
@@ -27,7 +19,6 @@ string int2str(int in) {
 }
 
 //Checks input to see if it is good
-
 bool checkInput(string choice, int len) {
     for (int i = 0; i < len; i++) {
         if (choice.compare(int2str(i)) == 0) {
@@ -37,6 +28,7 @@ bool checkInput(string choice, int len) {
     return false;
 }
 
+// initial display interface
 string displayInterface() {
     cout << "Welcome to COPper, a coin counting program!" << endl << endl;
     cout << "To get started, please take an picture of some coins.\n\n";
@@ -56,6 +48,7 @@ string displayInterface() {
     return fileName;
 }
 
+// menu interface
 int mainMenu(Data &data) {
     int n = 1;
     while (n != 0) {
@@ -72,7 +65,11 @@ int mainMenu(Data &data) {
         cout << "Please make a choice: ";
         cin >> n;
         cout << "\n\n";
+        
+        // OPTION 1 : Show me each of the coins
         if (n == 1) data.displayAll();
+        
+        // OPTION 2 : Show me an individual coin
         else if (n == 2) {
             string choice;
             string max = int2str(data.getNumOfCoins());
@@ -86,13 +83,19 @@ int mainMenu(Data &data) {
             } else {
                 cout << "That coin does not exist, cannot display coin \n\n";
             }
-        } else if (n == 3) {
+        }
+        
+        // OPTION 3 : Show me the denominational breakdown
+        else if (n == 3) {
             cout << "Our analysis has detected a total of " << data.getNumOfCoins() << " coins of the following denominations:\n";
             cout << "Quarters: " << data.countDenomination("quarter") << "\n";
             cout << "Dimes: " << data.countDenomination("dime") << "\n";
             cout << "Nickels: " << data.countDenomination("nickel") << "\n";
             cout << "Pennies: " << data.countDenomination("penny") << "\n\n";
-        } else if (n == 4) {
+        }
+        
+        // OPTION 4 : Correct a mis-identified coin
+        else if (n == 4) {
             string in1, in2;
             cout << "Whoops, we may have made an error. Choose a coin to re-identify.\n";
             cout << "Please select a coin by entering a number between 0 and " << data.getNumOfCoins() - 1 << "\n";
@@ -114,7 +117,10 @@ int mainMenu(Data &data) {
             } else {
                 cout << "That coin does not exist, no change made.\n\n";
             }
-        } else if (n == 5) {
+        }
+        
+        // OPTION 5 : Recalculate the total value
+        else if (n == 5) {
             int lengthc = data.getNumOfCoins();
             cout << "We have detected " << lengthc << " coin(s), with a total value of $" << data.sumCoins() << "\n";
         } else if (n == 0) {
