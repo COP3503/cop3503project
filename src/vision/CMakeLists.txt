@@ -18,5 +18,7 @@ if(MAKE_TESTS)
     )
     target_link_libraries(vision_test ${OpenCV_Libs} ${OpenCV_LIBRARIES} ${libgtk2.0-dev_LIBRARIES})
 
-ENDIF(MAKE_TESTS)  # Or something like that
+ENDIF(MAKE_TESTS)  # Or something lixke that
+
+
 

@@ -63,9 +63,9 @@ std::vector<Mat*> get_hough_masks(Mat input_image) {
 
 
 void get_hsv_masks(Mat input_image) {
-  Mat input_image_HSV, input_image_HSVmask_Copper, input_image_HSVmask_Silver;
+  Mat input_image_HSV, input_image_HSVmask_Copper, input_image_HSVmask_Silver, hsv_mask;
 
-  Mat hsv_mask;
+  
 
   cvtColor(input_image, input_image_HSV, CV_BGR2HSV);
   // adaptiveThreshold(InputArray src, OutputArray dst, double maxValue, int adaptiveMethod, int thresholdType, int blockSize, double C)
