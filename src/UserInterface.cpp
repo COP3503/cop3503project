@@ -7,13 +7,14 @@ using namespace std;
 string getPicture() {
     string myString;
     getline(cin, myString);
-    unsigned int len = myString.length();
-    string sub = myString.substr(len - 4, len);
-    string subl = myString.substr(len - 5, len);
-    if (sub == ".bmp" || sub == ".dib" || subl == ".jpeg" || sub == ".jpg" || sub == ".jpe" || sub == ".jp2" || sub == ".png" || sub == ".pbm" || sub == ".pgm" || sub == ".ppm" || sub.substr(1, 4) == ".sr" || sub == ".ras" || subl == ".tiff" || sub == ".tif") {
-        return myString;
-    }
-    return "void";
+    return myString;
+//    unsigned int len = myString.length();
+//    string sub = myString.substr(len - 4, len);
+//    string subl = myString.substr(len - 5, len);
+//    if (sub == ".bmp" || sub == ".dib" || subl == ".jpeg" || sub == ".jpg" || sub == ".jpe" || sub == ".jp2" || sub == ".png" || sub == ".pbm" || sub == ".pgm" || sub == ".ppm" || sub.substr(1, 4) == ".sr" || sub == ".ras" || subl == ".tiff" || sub == ".tif") {
+//        return myString;
+//    }
+//    return "void";
 }
 
 string displayInterface() {
@@ -100,8 +101,13 @@ int mainMenu(Data &data) {
 }
 
 int main() {
-    string imagePath = displayInterface();
-    Data data = Data(imagePath);
-    mainMenu(data);
+    Data *data;
+    bool noImage = true;
+    while (noImage) {
+        string imagePath = displayInterface();
+        data = new Data(imagePath);
+        noImage = data->mainImage.empty();
+    }
+    mainMenu(*data);
     return 0;
 }

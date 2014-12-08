@@ -16,6 +16,7 @@ public:
     void displayCoin(int);
     void displayAll();
     void correctCoin(int, string);
+    bool initFailed;
     //void compareCoins(Coin, int);
     vector<Coin> fillPiggyBank(vector<Mat*>);
     Mat mainImage;

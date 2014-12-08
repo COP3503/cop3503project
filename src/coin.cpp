@@ -75,10 +75,10 @@ Mat Coin::getMask(){
 };
 
 void Coin::updateProbablities(string denomination, double Prob){
-  if (denomination.compare("penny")==0) allProbabilities[0].push_back(Prob);
-  if (denomination.compare("nickel")==0) allProbabilities[1].push_back(Prob);
-  if (denomination.compare("dime")==0) allProbabilities[2].push_back(Prob);
-  if (denomination.compare("quarter")==0) allProbabilities[3].push_back(Prob);
+  if (denomination.compare("penny") == 0) allProbabilities[0].push_back(Prob);
+  if (denomination.compare("nickel") == 0) allProbabilities[1].push_back(Prob);
+  if (denomination.compare("dime") == 0) allProbabilities[2].push_back(Prob);
+  if (denomination.compare("quarter") == 0) allProbabilities[3].push_back(Prob);
 };
 
 void Coin::bestProb(string option){

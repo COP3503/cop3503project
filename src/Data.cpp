@@ -11,14 +11,18 @@ using namespace cv;
 
 Data::Data(string imgPath) {
     mainImage = imread(imgPath);
-    coinMasks = get_hough_masks(mainImage);
-    piggyBank = fillPiggyBank(coinMasks);
-    compareCoins(piggyBank);
-    for (auto coin = piggyBank.begin(); coin != piggyBank.end(); coin++) {
-        vector< map<string, double> > coinProbs = coin->getProbVector();
-        string denomination = label(coinProbs);
-        coin->setDenomination(denomination);
-        //std::cout << coin->getDenomination() << " = " << coin->getDollarValue() << std::endl;
+    if (mainImage.empty()) {
+        initFailed = true;
+    } else {
+        coinMasks = get_hough_masks(mainImage);
+        piggyBank = fillPiggyBank(coinMasks);
+        compareCoins(piggyBank);
+        for (auto coin = piggyBank.begin(); coin != piggyBank.end(); coin++) {
+            vector< map<string, double> > coinProbs = coin->getProbVector();
+            string denomination = label(coinProbs);
+            coin->setDenomination(denomination);
+            //std::cout << coin->getDenomination() << " = " << coin->getDollarValue() << std::endl;
+        }
     }
 }
 
@@ -70,7 +74,7 @@ void Data::displayAll() {
         string title = "Coin is a " + piggyBank[i].getDenomination();
         showCoin(mainImage, *coinMasks[i], title);
     }
-    waitKey(0);
+    //waitKey(0);
 }
 
 void Data::correctCoin(int i, string newDenom) {
