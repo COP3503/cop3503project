@@ -13,7 +13,7 @@ void showCoin(Mat original_image, Mat mask, string title) {
         Ex:
             showCoin(input_image, *masks[j]);
             waitKey(0);
-    */
+     */
     Mat masked;
     original_image.copyTo(masked, mask);
     imshow(title, masked);

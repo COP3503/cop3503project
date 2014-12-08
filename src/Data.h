@@ -21,7 +21,7 @@ public:
     Mat mainImage;
     vector<Mat*> coinMasks;
     vector<Coin> piggyBank;
-    
+
 };
 
 void compareCoins(vector<Coin>&);

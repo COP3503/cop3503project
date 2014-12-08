@@ -31,7 +31,6 @@ int main(int argc, char* argv[]) {
     cout << "Captured coins are worth: $" << data.sumCoins();
     for (int i = 0; i < data.getNumOfCoins(); i++) {
         data.displayCoin(i);
-        //waitKey(0);
     }
     
     /*

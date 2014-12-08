@@ -71,7 +71,7 @@ int mainMenu(Data &data) {
             int inputTwo = 0;
             cout << "Whoops, we may have made an error. Choose a coin to re-identify.\n";
             cout << "Please select a coin by entering a number between 0 and" << data.getNumOfCoins() << "\n";
-                    cout << "Coin to correct:";
+            cout << "Coin to correct:";
             cin >> input;
             if (input >= 0 && input < data.getNumOfCoins()) {
                 data.displayCoin(input);
