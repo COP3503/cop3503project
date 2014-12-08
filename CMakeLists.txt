@@ -10,5 +10,3 @@ add_subdirectory (src)
 add_subdirectory (test)
 
 find_package(OpenCV REQUIRED)
-add_executable(ImgDisplay imgDisplay.cpp)
-target_link_libraries(ImgDisplay ${OpenCV_LIBS})
