@@ -102,7 +102,7 @@ int mainMenu(Data &data) {
             cout << "Coin to correct:";
             cin >> in1;
             if (checkInput(in1, length) == true) {
-                data.displayCoin(input);
+	      data.displayCoin(atoi(in1.c_str()));
                 cout << "\n\nSelect the proper denomination: \n";
                 cout << "    1 : Quarter\n    2 : Dime\n    3 : Nickel\n    4 : Penny\n    0 : NO CHANGE\n";
                 cout << "Make a choice:";
