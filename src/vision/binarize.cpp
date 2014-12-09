@@ -6,21 +6,8 @@
 #include <string.h>
 
 using namespace cv;
-
-#define cop_H_Low 2
-#define cop_H_High 2
-#define cop_S_Low 99
-#define cop_S_High 99
-#define cop_V_Low 173
-#define cop_V_High 173
-
-#define sil_H_Low 2
-#define sil_H_High 2
-#define sil_S_Low 99
-#define sil_S_High 99
-#define sil_V_Low 173
-#define sil_V_High 173
-
+using namespace std;
+RNG rng(12345); 
 
 std::vector<Mat*> get_hough_masks(Mat input_image) {
   /* Given an RGB input image, returns a vector of images 
@@ -61,70 +48,179 @@ std::vector<Mat*> get_hough_masks(Mat input_image) {
   return masks;
 }
 
+//a used by get_hsv_masks(). it determine if a circle is a complete one
+int not_full_circle(float radius, double area){
+  int a, a_min;
+  a = 3.14*radius*radius;
+  a_min = a-(a*.4);
+  if (area<a_min){
+    return 1;
+  }
+  return 0;
+}
 
-void get_hsv_masks(Mat input_image) {
-  Mat input_image_HSV, input_image_HSVmask_Copper, input_image_HSVmask_Silver, hsv_mask;
-
+vector<Mat> get_hsv_masks(Mat input_image) {
+  /*takes in a RGB image of coins and return a vector of masks extracted from using HSV values.
+  the vector is not a binary image, but it can be anded with other images because the masked area is all
+  black(false) and the part of the coin is white(true)
   
+  EXAMPLE:
+  *******************************
+  Mat input_image = imread("../../test/Real_test_imgs/img6.JPG", CV_LOAD_IMAGE_COLOR);
+  vector<Mat> hsv_masks = get_hsv_masks(input_image);
 
+  for(i = 0; i < hsv_masks.size(); i++){
+    imshow( "Contours", hsv_masks[i] );
+    waitKey(500);
+  }
+  *******************************
+  this is going to individually show each mask, flashing at 0.5 sec rate.
+  */
+
+  // <- is comments
+  ///////// <- is what we could use to show current state image
+
+  int i;
+  Mat input_image_HSV = Mat::zeros( input_image.size(), CV_8UC3 );
+
+  //resize image if it's too big to fit screen
+  if( (input_image.cols > 600)   &&  (input_image.rows > 350) ) {
+    resize(input_image, input_image, Size(input_image.cols/8, input_image.rows/8)); // resized to half size
+  }
+
+  //convert to hsv
   cvtColor(input_image, input_image_HSV, CV_BGR2HSV);
-  // adaptiveThreshold(InputArray src, OutputArray dst, double maxValue, int adaptiveMethod, int thresholdType, int blockSize, double C)
 
-  //inrange for copper
-  inRange(input_image_HSV, Scalar(cop_H_Low, cop_S_Low, cop_V_Low), Scalar(cop_H_High, cop_S_High, cop_V_High), input_image_HSVmask_Copper);
-
-  //inragne for silver
-  inRange(input_image_HSV, Scalar(sil_H_Low, sil_S_Low, sil_V_Low), Scalar(sil_H_High, sil_S_High, sil_V_High), input_image_HSVmask_Silver);
-
-  //or all images together into one hsv mask
-  bitwise_or(input_image_HSVmask_Silver, input_image_HSVmask_Copper, hsv_mask);
-
-
-
-
-
+  //split image into 3 channels
   Mat channel[3];
   split(input_image_HSV, channel);
 
+  //take adaptiveThreshold of Channel V
   Mat thresh_H, thresh_S, thresh_V;
-  // ADAPTIVE_THRESH_MEAN_C
-  adaptiveThreshold(channel[0], thresh_H,  10.0, ADAPTIVE_THRESH_GAUSSIAN_C, THRESH_BINARY, 5, 1);
-  adaptiveThreshold(channel[1], thresh_S,  10.0, ADAPTIVE_THRESH_GAUSSIAN_C, THRESH_BINARY, 5, 1);
-  adaptiveThreshold(channel[2], thresh_V,  10.0, ADAPTIVE_THRESH_GAUSSIAN_C, THRESH_BINARY, 5, 1);
+  adaptiveThreshold(channel[2], thresh_V,  255, ADAPTIVE_THRESH_GAUSSIAN_C, THRESH_BINARY_INV, 333, 0);
+  /////////imshow("thresh_V before finding contours", thresh_V);
+
+  //find thresh_V contours, storing all of the contours in "contours"
+  vector<Vec4i> hierarchy;
+  vector<vector<Point>> contours;
+  findContours(thresh_V, contours, hierarchy, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_NONE, Point(0,0));
+  /////////imshow("thresh_V after finding thresh_V_contours", thresh_V);
+
+  //create circles and radius
+  vector<Point2f>center( contours.size() );
+  vector<float>radius( contours.size() );
+
+  //get circles
+  for( i = 0; i < contours.size(); i++ ){ 
+      minEnclosingCircle( (Mat)contours[i], center[i], radius[i] );
+  }
+
+  // draw circile contours, colorful ones!
+  Mat thresh_V_contours = Mat::zeros( thresh_V.size(), CV_8UC3 );//create a new Mat for the 
+  for( i = 0; i< contours.size(); i++ ){
+      Scalar color = Scalar( rng.uniform(0, 255), rng.uniform(0,255), rng.uniform(0,255) );
+      drawContours( thresh_V_contours, contours, -1, color, 1, 8, vector<Vec4i>(), 0, Point() );
+      circle( thresh_V_contours, center[i], (int)radius[i], color, 1, 8, 0 );
+  }
+  /////////imshow( "thresh_V_contours", thresh_V_contours );
+
+  //approximate all the circles(to get rid of the ones that has very small areas, aka, sparse)
+  vector<vector<Point> > approx( contours.size() );
+  vector<double> area0;
+  double area0_total;
+  double area0_avg;
+
+  //get rid of all the circles with area == 0 after aprpoximation
+  for(i = 0; i< contours.size(); i++){
+      approxPolyDP( Mat(contours[i]), approx[i], 2, true);
+      if(contourArea(approx[i]) == 0){
+        continue;
+      }
+       area0.push_back(contourArea(approx[i]));
+  }
+
+  //take average of all approx area first time
+  for(i = 0; i < area0.size(); i++){
+      /////////cout << "area1 =" << area0[i] << endl;
+      area0_total += area0[i];
+  }
+  area0_avg =  area0_total/area0.size();
+
+  //after taking the avg, calcualte the range number for anything less than 7% and take all of those numbers out
+  vector<double> area1;
+  double area0_min = area0_avg*.07;
+  double area1_total;
+  double area1_avg;
+
+  //get rid of anything area less than 7% of the average
+   for(i = 0; i< contours.size(); i++){
+      if(contourArea(approx[i]) < area0_min){
+        continue;
+      }
+       //area1 has all the areas without 0 and numbers<7%
+       area1.push_back(contourArea(approx[i]));
+  }
+  //recalculate the average without the area less than 7%
+  for(i = 0; i < area1.size(); i++){
+      /////////cout << "area1 =" << area1[i] << endl;
+      area1_total += area1[i];
+  }
+  area1_avg =  area1_total/area1.size();
+  /////////cout << "area1 size "<< area1.size() << endl;
+  /////////cout << "area1 avg "<< area1_avg << endl;
 
 
+  //use area1(the approximated one) to calculate the min and max of the remaining cirles for further filtering
+  double area_range_min = area1_avg/4;
+  double area_range_max =  area1_avg*2;
+
+  //remove all circles out of bound of min and max(by ceating a new image and getting all the images that falls within the range)
+  Mat thresh_V_contours_polished = Mat::zeros( thresh_V.size(), CV_8UC3 );//create a new Mat for the 
+  for( i = 0; i< approx.size(); i++ ){
+      Scalar color = Scalar( rng.uniform(0, 255), rng.uniform(0,255), rng.uniform(0,255) );
+      if( ( contourArea(approx[i]) > area_range_max ) || ( contourArea(approx[i]) < area_range_min ) ){
+        continue;
+      }
+      if( not_full_circle( radius[i], contourArea(approx[i]) ) == 1 )  {
+        continue;
+      }
+      drawContours( thresh_V_contours_polished, approx, -1, color, 1, 8, vector<Vec4i>(), 0, Point() );
+      circle( thresh_V_contours_polished, center[i], (int)radius[i], color, CV_FILLED, 8, 0 );
+  }
+  /////////imshow( "thresh_V_contours_polished before", thresh_V_contours_polished );
+
+  //convert image into grayscale and then binary for mask splitting.
+  Mat grayscaleMat;
+  cvtColor( thresh_V_contours_polished, grayscaleMat, CV_BGR2GRAY );
+  Mat binaryMat;
+  threshold(grayscaleMat, binaryMat, 0, 255, THRESH_BINARY);
+  /////////imshow("binary image", binaryMat);
 
 
+  //split masks by finding contours and and then putting them all into individual images
 
+  //find contours again
+  vector<vector<Point> > mask_contours;
+  vector<Vec4i> hierarchy1;
+  findContours(binaryMat, mask_contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, Point(0, 0) );
 
+  //split all the masks into mask_vector
+  vector<Mat> mask_vector;
+  Scalar color = Scalar( 250,250,250 );
+  for( i = 0; i< mask_contours.size(); i++ ){
+    Mat * temp = new Mat(input_image.rows, input_image.cols, CV_8U, Scalar(0,0,0));
+       drawContours( *temp, 
+                      mask_contours, i, color, CV_FILLED, 8, hierarchy1, 0, Point() );
+       mask_vector.push_back(*temp);
+  }
+   
+  ///////// for(i = 0; i < mask_vector.size(); i++){
+  /////////    imshow( "Contours", mask_vector[i] );
+  /////////    waitKey(500);
+  ///////// }
+  ///////// waitKey(0);
 
+  return mask_vector;
 
-
-  imshow("thresh_H", thresh_H );
-  imshow("thresh_S", thresh_S );
-  imshow("thresh_V", thresh_V );
-
-  imshow("H", channel[0]);
-  imshow("S", channel[1]);
-  imshow("V", channel[2]);
-
-  // Copper:
-  // 5°, 39%, 68
-
-  waitKey(0);
-}
-
-//somewhere is going to take the original image and and it with all the masks. return color name
-std::string identify_color_coin(Mat input_image, Mat mask) {
-  
-  Mat color_mask;
-  //AND the mask and the image together, store into color_mask
-  bitwise_and(input_image, mask, color_mask);
-
-  //color_mask now have one circle with color and everyting else is black
-  //get hsv value
-
-
-  //determine coin from values
 }
 

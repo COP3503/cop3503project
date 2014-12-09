@@ -8,19 +8,17 @@
 
 /* binarize.cpp --------------------------- */
 std::vector<cv::Mat*> get_hough_masks(cv::Mat);
+int not_full_circle(float, double);
+std::vector<cv::Mat> get_hsv_masks(cv::Mat);
 /* ---------------------------------------- */
+
+
+
 
 /* label.cpp --------------------------- */
 void update_probability_map(std::map<std::string, double> &input_map, std::map<std::string, double> &tracking_map);
 std::string label(std::vector< std::map< std::string, double > > maps);
 /* ------------------------------------- */
-
-/* visualization.cpp-------------------- 
-    Contains tools for visualizing images
-*/
-void showCoin(cv::Mat original_image, cv::Mat mask, std::string);
-/* ------------------------------------- */
-
 
 /* TODOs:
 
