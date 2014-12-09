@@ -11,6 +11,15 @@ using namespace cv;
 
 Data::Data(string imgPath) {
     mainImage = imread(imgPath);
+
+      //resize image if it's too big to fit screen
+    if( (mainImage.cols > 600)   &&  (mainImage.rows > 350) ) {
+        // We're resizing to 482 x 249. This might work. 
+        double col_target, row_target;
+        col_target = mainImage.cols / 482.0;
+        row_target = mainImage.rows / 249.0;
+        resize(mainImage, mainImage, Size(mainImage.cols/col_target, mainImage.rows/row_target)); // resized to half size
+    }
     if (mainImage.empty()) {
         initFailed = true;
     } else {
@@ -21,6 +30,7 @@ Data::Data(string imgPath) {
             vector< map<string, double> > coinProbs = coin->getProbVector();
             string denomination = label(coinProbs);
             coin->setDenomination(denomination);
+
         }
     }
 }
@@ -82,7 +92,7 @@ void Data::correctCoin(int i, string newDenom) {
 void Data::displayCoin(int index) {
     if (index < piggyBank.size()) {
         string title = "Coin is a " + piggyBank[index].getDenomination();
-        showCoin(mainImage, *coinMasks[index], title);
+        showCoin(mainImage, *(coinMasks[index]), title);
         waitKey(0);
     }
 }
@@ -91,7 +101,7 @@ void Data::displayCoin(int index) {
 void Data::displayAll() {
     for (int i = 0; i < getNumOfCoins(); i++) {
         string title = "Coin is a " + piggyBank[i].getDenomination();
-        showCoin(mainImage, *coinMasks[i], title);
+        showCoin(mainImage, *(coinMasks[i]), title);
     }
     //waitKey(0);
 }

@@ -30,7 +30,7 @@ bool checkInput(string choice, int len) {
 
 // initial display interface
 string displayInterface() {
-    cout << "Welcome to COPper, a coin counting program!" << endl << endl;
+    cout << "Welcome to COPper, a coin counting program!\n\n";
     cout << "To get started, please take an picture of some coins.\n\n";
     cout << "For best results, the image should:\n";
     cout << "    + Be taken from directly above the coins\n";
@@ -38,7 +38,7 @@ string displayInterface() {
     cout << "    + Depict no overlapping coins\n";
     cout << "    + Avoid partial coins (coins that are partially out of the image)\n\n";
     cout << "With your image now on your computer, please type the path and filename:\n\n";
-    cout << "Image Path: ";
+    cout << "Image Path: " << endl;
     string fileName = getPicture();
     if (fileName == "void") {
         cout << "Invalid picture inputted\n\n";
@@ -102,7 +102,7 @@ int mainMenu(Data &data) {
             cout << "Coin to correct:";
             cin >> in1;
             if (checkInput(in1, length) == true) {
-	      data.displayCoin(atoi(in1.c_str()));
+                data.displayCoin(atoi(in1.c_str()));
                 cout << "\n\nSelect the proper denomination: \n";
                 cout << "    1 : Quarter\n    2 : Dime\n    3 : Nickel\n    4 : Penny\n    0 : NO CHANGE\n";
                 cout << "Make a choice:";
