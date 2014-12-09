@@ -14,11 +14,10 @@ if(MAKE_TESTS)
         binarize.cpp
         label.cpp
         visualization.cpp
-        ${PROJECT_SOURCE_DIR}/test/coins_1.jpg
     )
     target_link_libraries(vision_test ${OpenCV_Libs} ${OpenCV_LIBRARIES} ${libgtk2.0-dev_LIBRARIES})
 
-ENDIF(MAKE_TESTS)  # Or something lixke that
+ENDIF(MAKE_TESTS)  # Or something like that
 
 
 

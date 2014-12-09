@@ -59,15 +59,15 @@ int not_full_circle(float radius, double area){
   return 0;
 }
 
-vector<Mat> get_hsv_masks(Mat input_image) {
-  /*takes in a RGB image of coins and return a vector of masks extracted from using HSV values.
+vector<Mat*> get_hsv_masks(Mat input_image) {
+  /*takes in a RGB image of coins and return a vector of pointers to masks extracted from using HSV values.
   the vector is not a binary image, but it can be anded with other images because the masked area is all
   black(false) and the part of the coin is white(true)
   
   EXAMPLE:
   *******************************
   Mat input_image = imread("../../test/Real_test_imgs/img6.JPG", CV_LOAD_IMAGE_COLOR);
-  vector<Mat> hsv_masks = get_hsv_masks(input_image);
+  vector<Mat*> hsv_masks = get_hsv_masks(input_image);
 
   for(i = 0; i < hsv_masks.size(); i++){
     imshow( "Contours", hsv_masks[i] );
@@ -115,10 +115,10 @@ vector<Mat> get_hsv_masks(Mat input_image) {
       minEnclosingCircle( (Mat)contours[i], center[i], radius[i] );
   }
 
-  // draw circile contours, colorful ones!
+  // draw circile contours
   Mat thresh_V_contours = Mat::zeros( thresh_V.size(), CV_8UC3 );//create a new Mat for the 
+  Scalar color = Scalar(255, 250, 250);
   for( i = 0; i< contours.size(); i++ ){
-      Scalar color = Scalar( rng.uniform(0, 255), rng.uniform(0, 255), rng.uniform(0, 255) );
       drawContours( thresh_V_contours, contours, -1, color, 1, 8, vector<Vec4i>(), 0, Point() );
       circle( thresh_V_contours, center[i], (int)radius[i], color, 1, 8, 0 );
   }
@@ -175,9 +175,8 @@ vector<Mat> get_hsv_masks(Mat input_image) {
   double area_range_max = area1_avg * 2;
 
   //remove all circles out of bound of min and max(by ceating a new image and getting all the images that falls within the range)
-  Mat thresh_V_contours_polished = Mat::zeros( thresh_V.size(), CV_8UC3 );//create a new Mat for the 
+  Mat thresh_V_contours_polished = Mat::zeros( thresh_V.size(), CV_8UC3 );
   for( i = 0; i< approx.size(); i++ ){
-      Scalar color = Scalar( rng.uniform(0, 255), rng.uniform(0, 255), rng.uniform(0, 255) );
       if( ( contourArea(approx[i]) > area_range_max ) || ( contourArea(approx[i]) < area_range_min ) ){
         continue;
       }
@@ -205,13 +204,13 @@ vector<Mat> get_hsv_masks(Mat input_image) {
   findContours(binaryMat, mask_contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, Point(0, 0) );
 
   //split all the masks into mask_vector
-  vector<Mat> mask_vector;
-  Scalar color = Scalar( 250, 250, 250 );
-  for( i = 0; i < mask_contours.size(); i++ ){
-    Mat * temp = new Mat(input_image.rows, input_image.cols, CV_8U, Scalar(0, 0, 0));
+  Scalar binary_color = Scalar(255);
+  vector<Mat*> mask_vector;
+  for( i = 0; i< mask_contours.size(); i++ ){
+    Mat * temp = new Mat(input_image.rows, input_image.cols, CV_8U, Scalar(0));
        drawContours( *temp, 
-                      mask_contours, i, color, CV_FILLED, 8, hierarchy1, 0, Point() );
-       mask_vector.push_back(*temp);
+                      mask_contours, i, binary_color, CV_FILLED, 8, hierarchy1, 0, Point() );
+       mask_vector.push_back(temp);
   }
    
   ///////// for(i = 0; i < mask_vector.size(); i++){

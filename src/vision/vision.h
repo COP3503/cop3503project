@@ -9,7 +9,7 @@
 /* binarize.cpp --------------------------- */
 std::vector<cv::Mat*> get_hough_masks(cv::Mat);
 int not_full_circle(float, double);
-std::vector<cv::Mat> get_hsv_masks(cv::Mat);
+std::vector<cv::Mat*> get_hsv_masks(cv::Mat);
 /* ---------------------------------------- */
 
 
