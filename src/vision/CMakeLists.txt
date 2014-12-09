@@ -7,7 +7,6 @@ set(the_description "Vision tools for the coin counting application.")
 
 #add_library ( COP3503_VISION SHARED ${PROJECT_SOURCE_DIR}/binarize.cpp ))
 
-<<<<<<< HEAD
 if(MAKE_TESTS)
 
     add_executable (vision_test
@@ -19,7 +18,7 @@ if(MAKE_TESTS)
     target_link_libraries(vision_test ${OpenCV_Libs} ${OpenCV_LIBRARIES} ${libgtk2.0-dev_LIBRARIES})
 
 ENDIF(MAKE_TESTS)  # Or something like that
-=======
+
 #if(MAKE_TESTS)
 #
 #    add_executable (vision_test
@@ -32,7 +31,7 @@ ENDIF(MAKE_TESTS)  # Or something like that
 #    target_link_libraries(vision_test ${OpenCV_Libs} ${OpenCV_LIBRARIES} ${libgtk2.0-dev_LIBRARIES})
 
 #ENDIF(MAKE_TESTS)  # Or something lixke that
->>>>>>> forSubmission
+
 
 
 
