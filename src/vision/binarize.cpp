@@ -118,7 +118,7 @@ vector<Mat> get_hsv_masks(Mat input_image) {
   // draw circile contours, colorful ones!
   Mat thresh_V_contours = Mat::zeros( thresh_V.size(), CV_8UC3 );//create a new Mat for the 
   for( i = 0; i< contours.size(); i++ ){
-      Scalar color = Scalar( rng.uniform(0, 255), rng.uniform(0,255), rng.uniform(0,255) );
+      Scalar color = Scalar( rng.uniform(0, 255), rng.uniform(0, 255), rng.uniform(0, 255) );
       drawContours( thresh_V_contours, contours, -1, color, 1, 8, vector<Vec4i>(), 0, Point() );
       circle( thresh_V_contours, center[i], (int)radius[i], color, 1, 8, 0 );
   }
@@ -148,7 +148,7 @@ vector<Mat> get_hsv_masks(Mat input_image) {
 
   //after taking the avg, calcualte the range number for anything less than 7% and take all of those numbers out
   vector<double> area1;
-  double area0_min = area0_avg*.07;
+  double area0_min = area0_avg * .07;
   double area1_total;
   double area1_avg;
 
@@ -172,12 +172,12 @@ vector<Mat> get_hsv_masks(Mat input_image) {
 
   //use area1(the approximated one) to calculate the min and max of the remaining cirles for further filtering
   double area_range_min = area1_avg/4;
-  double area_range_max =  area1_avg*2;
+  double area_range_max = area1_avg * 2;
 
   //remove all circles out of bound of min and max(by ceating a new image and getting all the images that falls within the range)
   Mat thresh_V_contours_polished = Mat::zeros( thresh_V.size(), CV_8UC3 );//create a new Mat for the 
   for( i = 0; i< approx.size(); i++ ){
-      Scalar color = Scalar( rng.uniform(0, 255), rng.uniform(0,255), rng.uniform(0,255) );
+      Scalar color = Scalar( rng.uniform(0, 255), rng.uniform(0, 255), rng.uniform(0, 255) );
       if( ( contourArea(approx[i]) > area_range_max ) || ( contourArea(approx[i]) < area_range_min ) ){
         continue;
       }
@@ -206,9 +206,9 @@ vector<Mat> get_hsv_masks(Mat input_image) {
 
   //split all the masks into mask_vector
   vector<Mat> mask_vector;
-  Scalar color = Scalar( 250,250,250 );
-  for( i = 0; i< mask_contours.size(); i++ ){
-    Mat * temp = new Mat(input_image.rows, input_image.cols, CV_8U, Scalar(0,0,0));
+  Scalar color = Scalar( 250, 250, 250 );
+  for( i = 0; i < mask_contours.size(); i++ ){
+    Mat * temp = new Mat(input_image.rows, input_image.cols, CV_8U, Scalar(0, 0, 0));
        drawContours( *temp, 
                       mask_contours, i, color, CV_FILLED, 8, hierarchy1, 0, Point() );
        mask_vector.push_back(*temp);
