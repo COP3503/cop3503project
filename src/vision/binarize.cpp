@@ -19,6 +19,9 @@ std::vector<Mat*> get_hough_masks(Mat input_image) {
         waitKey(0);
       }
   */
+
+  /*
+
   std::vector<Mat*> masks;
 
   // Greyscaling of input image
@@ -46,6 +49,10 @@ std::vector<Mat*> get_hough_masks(Mat input_image) {
     masks.push_back(mask);
   }
   return masks;
+  */
+
+  vector<Mat*> hsv_masks = get_hsv_masks(input_image);
+  return hsv_masks;
 }
 
 //a used by get_hsv_masks(). it determine if a circle is a complete one
