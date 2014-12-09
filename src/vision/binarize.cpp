@@ -91,9 +91,9 @@ vector<Mat*> get_hsv_masks(Mat input_image) {
   Mat input_image_HSV = Mat::zeros( input_image.size(), CV_8UC3 );
 
   //resize image if it's too big to fit screen
-  if( (input_image.cols > 600)   &&  (input_image.rows > 350) ) {
-    resize(input_image, input_image, Size(input_image.cols/8, input_image.rows/8)); // resized to half size
-  }
+  // if( (input_image.cols > 600)   &&  (input_image.rows > 350) ) {
+  //   resize(input_image, input_image, Size(input_image.cols/8, input_image.rows/8)); // resized to half size
+  // }
 
   //convert to hsv
   cvtColor(input_image, input_image_HSV, CV_BGR2HSV);
