@@ -21,13 +21,15 @@ using namespace std;
 
 int main(int argc, char* argv[]) {
   int i; 
-  Mat input_image = imread("../../test/Real_test_imgs/img6.JPG", CV_LOAD_IMAGE_COLOR);
-  vector<Mat> hsv_masks = get_hsv_masks(input_image);
-  
-    for(i = 0; i < hsv_masks.size(); i++){
-    imshow( "Contours", hsv_masks[i] );
-  waitKey(500);
- }
+  Mat input_image = imread("../../test/Real_test_imgs/img2.JPG", CV_LOAD_IMAGE_COLOR);
+  vector<Mat*> hsv_masks = get_hsv_masks(input_image);
+
+  for(i = 0; i < hsv_masks.size(); i++) {
+    imshow( "Contours", *(hsv_masks[i]) );
+    waitKey(500);
+  }
+ 
+  waitKey(0);
 
 /*
   Again, should be using smart ptrs

@@ -59,15 +59,15 @@ int not_full_circle(float radius, double area){
   return 0;
 }
 
-vector<Mat> get_hsv_masks(Mat input_image) {
-  /*takes in a RGB image of coins and return a vector of masks extracted from using HSV values.
+vector<Mat*> get_hsv_masks(Mat input_image) {
+  /*takes in a RGB image of coins and return a vector of pointers to masks extracted from using HSV values.
   the vector is not a binary image, but it can be anded with other images because the masked area is all
   black(false) and the part of the coin is white(true)
   
   EXAMPLE:
   *******************************
   Mat input_image = imread("../../test/Real_test_imgs/img6.JPG", CV_LOAD_IMAGE_COLOR);
-  vector<Mat> hsv_masks = get_hsv_masks(input_image);
+  vector<Mat*> hsv_masks = get_hsv_masks(input_image);
 
   for(i = 0; i < hsv_masks.size(); i++){
     imshow( "Contours", hsv_masks[i] );
@@ -148,7 +148,7 @@ vector<Mat> get_hsv_masks(Mat input_image) {
 
   //after taking the avg, calcualte the range number for anything less than 7% and take all of those numbers out
   vector<double> area1;
-  double area0_min = area0_avg*.07;
+  double area0_min = area0_avg * .07;
   double area1_total;
   double area1_avg;
 
@@ -172,7 +172,7 @@ vector<Mat> get_hsv_masks(Mat input_image) {
 
   //use area1(the approximated one) to calculate the min and max of the remaining cirles for further filtering
   double area_range_min = area1_avg/4;
-  double area_range_max =  area1_avg*2;
+  double area_range_max = area1_avg * 2;
 
   //remove all circles out of bound of min and max(by ceating a new image and getting all the images that falls within the range)
   Mat thresh_V_contours_polished = Mat::zeros( thresh_V.size(), CV_8UC3 );
@@ -204,13 +204,13 @@ vector<Mat> get_hsv_masks(Mat input_image) {
   findContours(binaryMat, mask_contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, Point(0, 0) );
 
   //split all the masks into mask_vector
-  Scalar biary_color = Scalar(255);
-  vector<Mat> mask_vector;
+  Scalar binary_color = Scalar(255);
+  vector<Mat*> mask_vector;
   for( i = 0; i< mask_contours.size(); i++ ){
     Mat * temp = new Mat(input_image.rows, input_image.cols, CV_8U, Scalar(0));
        drawContours( *temp, 
                       mask_contours, i, binary_color, CV_FILLED, 8, hierarchy1, 0, Point() );
-       mask_vector.push_back(*temp);
+       mask_vector.push_back(temp);
   }
    
   ///////// for(i = 0; i < mask_vector.size(); i++){
