@@ -12,14 +12,11 @@ using namespace cv;
 Data::Data(string imgPath) {
     mainImage = imread(imgPath);
 
-      //resize image if it's too big to fit screen
+    //resize image if it's too big to fit screen
     if( (mainImage.cols > 600)   &&  (mainImage.rows > 350) ) {
-        // We're resizing to 482 x 249. This might work. 
-        double col_target, row_target;
-        col_target = mainImage.cols / 482.0;
-        row_target = mainImage.rows / 249.0;
-        resize(mainImage, mainImage, Size(mainImage.cols/col_target, mainImage.rows/row_target)); // resized to half size
+    resize(mainImage, mainImage, Size(mainImage.cols/8, mainImage.rows/8)); // resized to half size
     }
+
     if (mainImage.empty()) {
         initFailed = true;
     } else {
